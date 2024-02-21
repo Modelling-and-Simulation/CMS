@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import RoundedRectangle from "./components/RoundedRectangle";
+import { Link } from 'react-router-dom';
 
 const Content = () => {
   return (
@@ -48,15 +49,18 @@ const Content = () => {
           Upload linked content and target
         </RoundedRectangle>
 
-        <RoundedRectangle sx={{ textAlign: 'center' }} index={3}>
-          <div style={{marginBottom: 5}}>
-            <img 
+        <Link to='/preview' style={{ textDecoration: 'none' }}>
+          <RoundedRectangle sx={{ textAlign: 'center' }} index={3}>
+            <div style={{ marginBottom: 5 }}>
+              <img 
                 src="/img/upload.png" 
                 style={{ width: '2vw', height: '2vh', borderRadius: 'inherit', objectFit: 'cover' }} 
-            />
-          </div>
-          Connect the content and target
-        </RoundedRectangle>
+              />
+            </div>
+            Connect the content and target
+          </RoundedRectangle>
+        </Link>
+
       </div>
 
     </Container>

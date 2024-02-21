@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
@@ -7,6 +8,7 @@ import UploadContent from '../UploadContent';
 import LinkedUpload from '../LinkedUpload';
 
 const RoundedRectangle = ({ children, index, ...props }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isHoveredBox, setHoveredBox] = useState(false);
   const [isHoveredClose, setHoveredClose] = useState(false);
@@ -15,7 +17,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
     if (index < 3) {
       setOpen(true);
     } else {
-      // history.push('/another-page'); // Navigate to another page for the last rectangle
+      navigate('/preview'); // Navigate to the Preview page for the last rectangle
     }
   };
 
@@ -61,12 +63,11 @@ const RoundedRectangle = ({ children, index, ...props }) => {
                   objectFit: 'cover',
                   cursor: 'pointer',
                 }}
-                onClick={handleClose} // Close the dialog when the close image is clicked
+                onClick={handleClose}
                 onMouseEnter={() => setHoveredClose(true)}
                 onMouseLeave={() => setHoveredClose(false)}
               />
             </div>
-            {/* Content of the popup */}
             {index === 0 && (
               <UploadContent title="Upload a Content " onClose={handleClose} onSubmit={() => console.log('Submit 1')} />
             )}
