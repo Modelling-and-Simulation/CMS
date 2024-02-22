@@ -16,12 +16,12 @@ const Content = () => {
         This is the first website where you can interchange the contents as well as the targets as desired.
       </Typography>
 
-      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 50, marginTop: 20 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 50, marginTop: '15vh' }}>
         <RoundedRectangle sx={{ textAlign: 'center' }} index={0}>
             <div>
                 <img 
                     src="/img/upload.png" 
-                    style={{ width: '2vw', height: '2vh', borderRadius: 'inherit', objectFit: 'cover' }} 
+                    style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
                 />
             </div>
           Upload a content
@@ -31,7 +31,7 @@ const Content = () => {
           <div>
             <img 
                 src="/img/upload.png" 
-                style={{ width: '2vw', height: '2vh', borderRadius: 'inherit', objectFit: 'cover' }} 
+                style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
             />
           </div>
           Upload a target
@@ -43,7 +43,7 @@ const Content = () => {
           <div style={{marginBottom: 5}}>
             <img 
                 src="/img/upload.png" 
-                style={{ width: '2vw', height: '2vh', borderRadius: 'inherit', objectFit: 'cover' }} 
+                style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
             />
           </div>
           Upload linked content and target
@@ -54,7 +54,7 @@ const Content = () => {
             <div style={{ marginBottom: 5 }}>
               <img 
                 src="/img/upload.png" 
-                style={{ width: '2vw', height: '2vh', borderRadius: 'inherit', objectFit: 'cover' }} 
+                style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
               />
             </div>
             Connect the content and target

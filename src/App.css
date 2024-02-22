@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
-}
+/* *{
+  background-color: #E6DCEA;
+  top: 0%;
+  left: 2vw;
+} */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.top-preview {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed; /* Set position to fixed */
+  top: 0; 
+  left: 0;
+  width: 100%;
+}
+
+.top-preview > div {
+  width: 100%;
+}
+
+.preview{
+  border: 1px solid rgb(82, 82, 82);
+  /* width: 60vw; */
+  margin-bottom: 2vh;
+  margin-top: 5vh;
+  padding: 1%;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: flex;
 }
 
-.App-link {
-  color: #61dafb;
+.preview-header{
+  color: white; 
+  background-color: purple;
+  text-align: center;
+  width: '100%';
+  box-shadow: 5px 5px 5px plum;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.preview-image {
+  transition: transform 0.3s ease; 
+  box-shadow: 5px 5px 5px rgb(44, 23, 56);
+
+  &:hover {
+    transform: scale(1.1); /* Increase the size by 10% on hover */
+    cursor: pointer; 
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+.content-scroll, .target-scroll {
+  max-height: 45vh; 
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+.select-content, .select-target{
+  width: 35vw;
+  height: 50vh;
+  margin-top: 45vh;
+  padding: 5px;
+  border: 0.5px solid black;
+  margin-bottom: 5vh;
+}
+
+
+/* width */
+.content-scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.content-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.content-scroll::-webkit-scrollbar-thumb {
+  background: #a04198;
+}
+
+/* Handle on hover */
+.content-scroll::-webkit-scrollbar-thumb:hover {
+  background: #e03bd7;
+}
+
+/* width */
+.target-scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.target-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.target-scroll::-webkit-scrollbar-thumb {
+  background: #a04198;
+}
+
+/* Handle on hover */
+.target-scroll::-webkit-scrollbar-thumb:hover {
+  background: #e03bd7;
 }
