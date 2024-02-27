@@ -5,16 +5,16 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
  
-function Header() {
+function Header({title}) {
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#9518C0' }}>
+        <AppBar sx={{ backgroundColor: '#9518C0' }}>
             <Toolbar>
                 <Typography
                     variant="h6"
                     component="div"
                     sx={{ flexGrow: 1, textAlign: 'center' }}
                 >
-                    Content Management System
+                    {title}
                 </Typography>
             </Toolbar>
         </AppBar>

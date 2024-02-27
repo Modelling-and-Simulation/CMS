@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import UploadContent from '../UploadContent';
@@ -52,8 +51,8 @@ const RoundedRectangle = ({ children, index, ...props }) => {
 
       {index < 3 && (
         <Dialog open={open} onClose={handleClose}>
-          <DialogContent>
-            <div style={{ float: 'right', marginBottom: '2vh', position: 'relative' }}>
+          <DialogContent sx={{margin: 2}}>
+            <div style={{ float: 'right', position: 'absolute', padding:20, marginLeft:'21vw' }}>
               <img
                 src="/img/close.png"
                 style={{
@@ -68,8 +67,9 @@ const RoundedRectangle = ({ children, index, ...props }) => {
                 onMouseLeave={() => setHoveredClose(false)}
               />
             </div>
+            <div>
             {index === 0 && (
-              <UploadContent title="Upload a Content " onClose={handleClose} onSubmit={() => console.log('Submit 1')} />
+              <UploadContent sx={{margin: 2}} title="Upload a Content " onClose={handleClose} onSubmit={() => console.log('Submit 1')} />
             )}
             {index === 1 && (
               <UploadContent title="Upload a Target" onClose={handleClose} onSubmit={() => console.log('Submit 2')} />
@@ -77,6 +77,8 @@ const RoundedRectangle = ({ children, index, ...props }) => {
             {index === 2 && (
               <LinkedUpload title="Upload linked content and target" onClose={handleClose} onSubmit={() => console.log('Submit 3')} />
             )}
+            </div>
+            
           </DialogContent>
         </Dialog>
       )}

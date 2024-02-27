@@ -16,7 +16,6 @@ const UploadContent = ({ onClose, title, onSubmit }) => {
       <Typography 
         variant="h6" 
         textAlign='center' 
-        marginBottom='20px' 
         fontWeight='bold'
         >{title}</Typography>
       Select files to upload:

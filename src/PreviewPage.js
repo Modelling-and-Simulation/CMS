@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import DisplayPreview from './DisplayPreview';
+import Header from './components/Header';
 
 const PreviewPage = () => {
+  const defaultImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'fit' };
+  const modelImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'cover' };
+
   const [selectedContentImage, setSelectedContentImage] = useState("/img/image.png");
   const [selectedTargetImage, setSelectedTargetImage] = useState("/img/image.png");
 
@@ -35,11 +40,12 @@ const PreviewPage = () => {
   return (
     <Container>
       <div className='top-preview'>
-        <div className='preview-header'>
-          <Typography style={{ backgroundColor: 'purple', height: '6vh', fontWeight: 'bold', marginTop: 15 }}>
+        {/* <div className='preview-header'>
+          <Typography style={{ backgroundColor: '#9518C0', height: '6vh', fontWeight: 'bold', marginTop: 15 }}>
             Link Content and the Target
           </Typography>
-        </div>
+        </div> */}
+        <Header title='Link Content and the Target'/>
 
         <div className='preview' style={{ width: '40vw' }}>
           <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
@@ -47,7 +53,7 @@ const PreviewPage = () => {
               <div style={{ textAlign: 'center', border: '1px solid #ccc', padding: '10px', marginBottom: 15 }}>
                 <img
                   src={selectedContentImage}
-                  style={{ width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'cover' }}
+                  style={selectedContentImage === "/img/image.png" ? defaultImageStyle : modelImageStyle}
                 />
               </div>
             )}
@@ -63,7 +69,7 @@ const PreviewPage = () => {
               <div style={{ textAlign: 'center', border: '1px solid #ccc', padding: '10px', marginBottom: 15 }}>
                 <img
                   src={selectedTargetImage}
-                  style={{ width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'cover' }}
+                  style={selectedTargetImage === "/img/image.png" ? defaultImageStyle : modelImageStyle}
                 />
               </div>
             )}

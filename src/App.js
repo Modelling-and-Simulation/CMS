@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
-import Header from "./Header";
+import './css/App.css';
+import Header from "./components/Header";
 import Content from "./Content";
-import PreviewPage from "./Preview";  // Make sure to import your PreviewPage component
+import PreviewPage from "./PreviewPage";  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
           path="/"
           element={
             <div>
-              <Header />
+              <Header title='Content Management System'/>
               <Content />
             </div>
           }
