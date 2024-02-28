@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import UploadContent from '../UploadContent';
 import LinkedUpload from '../LinkedUpload';
+import UploadTarget from '../UploadTarget';
 
 const RoundedRectangle = ({ children, index, ...props }) => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
       {index < 3 && (
         <Dialog open={open} onClose={handleClose}>
           <DialogContent sx={{margin: 2}}>
-            
+
             <div style={{ float: 'right', position: 'absolute', padding:15, marginLeft:'19vw' }}>
               <img
                 src="/img/close.png"
@@ -73,19 +74,13 @@ const RoundedRectangle = ({ children, index, ...props }) => {
               {index === 0 && (
                 <UploadContent 
                   sx={{margin: 2}} 
-                  title="Upload a Content" 
-                  section1="Upload the mind file" 
-                  section2="Upload the images"
                   onClose={handleClose} 
                   onSubmit={
                     () => console.log('Submit 1')
                   } />
               )}
               {index === 1 && (
-                <UploadContent 
-                  title="Upload a Target" 
-                  section1="Upload the glb file" 
-                  section2="Upload the images of the model"
+                <UploadTarget 
                   onClose={handleClose} 
                   onSubmit={
                     () => console.log('Submit 2')

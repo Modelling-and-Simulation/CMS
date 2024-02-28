@@ -1,38 +1,80 @@
 // UploadContent.js
 import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 
-const UploadContent = ({ onClose, title, onSubmit, section1, section2 }) => {
+const UploadContent = ({ onClose, onSubmit }) => {
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState({started: false, pc: 0});
+  const [msg, setMsg] = useState(null);
+
   const handleSubmit = () => {
-    // Handle submit logic here
-    onSubmit(); // Custom onSubmit function provided by parent component
+    if(!file){
+      setMsg('No file selected!');
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append('file', file);
+
+    setMsg("Uploading...");
+    setProgress(prevState => {
+      return{...prevState, started:true}
+    })
+    axios.post('http://localhost:8080/api/contents/', fd, {
+      onUploadProgress: (ProgressEvent) => {setProgress(prevState => {
+        return {...prevState, pc: ProgressEvent.progress*100}
+      })},
+      headers: {
+        "Custom-Header": "value",
+      }
+    })
+    .then(res => {
+      setMsg("Upload successful!");
+      console.log(res.data);
+    })
+    .catch(err => {
+      setMsg("Upload failed!");
+      console.error(err);
+    });
+
+    onSubmit(console.log(file)); // Custom onSubmit function provided by parent component
     onClose(); // Close the popup after submitting
   };
 
   return (
     <>
-      <Typography 
+    <form action="" >
+    <Typography 
         variant="h6" 
         textAlign='center' 
         fontWeight='bold'
         marginBottom='10px'
-        >{title}</Typography>
+        >
+          Upload a Content
+        </Typography>
       {/* Select files to upload: */}
-      {section1}:
+      Upload the model file:
       <div style={{marginTop: 10, marginBottom:5}}>
-        <Input type="file" disableUnderline />
+        <Input name='modelFile' onChange={(e) => { setFile(e.target.files[0]) }} type="file" disableUnderline />
       </div>
-      {section2}:
+      Upload the images of the model:
       <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
-        <Input type="file" disableUnderline />
+        <Input name='contentImages' onChange={(e) => { setFile(e.target.files[0]) }} type="file" disableUnderline />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10}}>
         <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
           Submit
         </Button>
       </div>
+      {progress.started && <progress max="100" value={progress.pc}></progress>}
+      {msg && <span>{msg}</span>}
+
+    </form>
+      
     </>
   );
 };
