@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 
-const UploadContent = ({ onClose, title, onSubmit }) => {
+const UploadContent = ({ onClose, title, onSubmit, section1, section2 }) => {
   const handleSubmit = () => {
     // Handle submit logic here
     onSubmit(); // Custom onSubmit function provided by parent component
@@ -17,12 +17,18 @@ const UploadContent = ({ onClose, title, onSubmit }) => {
         variant="h6" 
         textAlign='center' 
         fontWeight='bold'
+        marginBottom='10px'
         >{title}</Typography>
-      Select files to upload:
-      <div style={{margin: 20}}>
+      {/* Select files to upload: */}
+      {section1}:
+      <div style={{marginTop: 10, marginBottom:5}}>
         <Input type="file" disableUnderline />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20}}>
+      {section2}:
+      <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
+        <Input type="file" disableUnderline />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10}}>
         <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
           Submit
         </Button>
