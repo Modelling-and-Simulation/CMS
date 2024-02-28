@@ -13,9 +13,67 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const [progress, setProgress] = useState({started: false, pc: 0});
   const [msg, setMsg] = useState(null);
 
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isError2, setIsError2] = useState(false);
+  const [errorMsg2, setErrorMsg2] = useState("");
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess2, setIsSuccess2] = useState(false);
+
+
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setIsSuccess(false);
+
+    const allowedTypes = [".glb"];
+    if(!allowedTypes.includes(selectedFile?.type)){
+      setIsError(true);
+      setErrorMsg ("Only glb format is allowed!");
+      return;
+    }
+
+    setIsError(false);
+    setFile(selectedFile);
+  }
+
+  const handleFileChange2 = (e) => {
+    const selectedFile2 = e.target.files[0];
+    setIsSuccess2(false);
+
+    const allowedTypes =["image/jpg", "image/jpeg", "image/png", "image/webp"];
+    if(!allowedTypes.includes(selectedFile2?.type)){
+      setIsError2(true);
+      setErrorMsg2 ("Only jpg, png, webp, & jpeg formats are allowed!");
+      return;
+    }
+
+    setIsError2(false);
+    setFile2(selectedFile2);
+  }
+
   const handleSubmit = () => {
-    if(!file || !file2){
-      setMsg('No file selected!');
+    if(isError){
+      return;
+    }
+    // setErrorMsg("");
+    if(isError2){
+      return;
+    }
+    // setErrorMsg2("");
+
+
+    // console.log(file);
+    if(!file){
+      setIsError(true);
+      setErrorMsg('No model file is selected!');
+      // return;
+    }
+
+    if(!file2){
+      setIsError2(true);
+      setErrorMsg2('No image file is selected!');
       return;
     }
 
@@ -27,6 +85,7 @@ const UploadContent = ({ onClose, onSubmit }) => {
     setProgress(prevState => {
       return{...prevState, started:true}
     })
+
     axios.post('http://localhost:8080/api/contents/', fd, {
       onUploadProgress: (ProgressEvent) => {setProgress(prevState => {
         return {...prevState, pc: ProgressEvent.progress*100}
@@ -62,13 +121,25 @@ const UploadContent = ({ onClose, onSubmit }) => {
       {/* Select files to upload: */}
       Upload the model file:
       <div style={{marginTop: 10, marginBottom:5}}>
-        <Input name='modelFile' onChange={(e) => { setFile(e.target.files[0]) }} type="file" disableUnderline />
+        <Input 
+          name='modelFile' 
+          onChange={handleFileChange} 
+          type="file" 
+          disableUnderline 
+        />
+        {isError && <div className='error-text'>{errorMsg}</div>}
       </div>
       Upload the images of the model:
       <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
-        <Input name='contentImages' onChange={(e) => { setFile2(e.target.files[0]) }} type="file" disableUnderline />
+        <Input 
+          name='contentImages' 
+          onChange={handleFileChange2} 
+          type="file" 
+          disableUnderline 
+        />
+        {isError2 && <div className='error-text'>{errorMsg2}</div>}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10}}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10, marginTop:20}}>
         <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
           Submit
         </Button>

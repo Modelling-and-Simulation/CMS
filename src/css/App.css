@@ -106,3 +106,12 @@
 .target-scroll::-webkit-scrollbar-thumb:hover {
   background: #e03bd7;
 }
+
+.error-text{
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: red;
+  background-color: blanchedalmond;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+}
