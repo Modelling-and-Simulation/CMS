@@ -8,17 +8,20 @@ import Button from '@mui/material/Button';
 
 const UploadContent = ({ onClose, onSubmit }) => {
   const [file, setFile] = useState(null);
+  const [file2, setFile2] = useState(null);
+
   const [progress, setProgress] = useState({started: false, pc: 0});
   const [msg, setMsg] = useState(null);
 
   const handleSubmit = () => {
-    if(!file){
+    if(!file || !file2){
       setMsg('No file selected!');
       return;
     }
 
     const fd = new FormData();
-    fd.append('file', file);
+    fd.append('modelFile', file);
+    fd.append('contentImages', file2);
 
     setMsg("Uploading...");
     setProgress(prevState => {
@@ -41,7 +44,7 @@ const UploadContent = ({ onClose, onSubmit }) => {
       console.error(err);
     });
 
-    onSubmit(console.log(file)); // Custom onSubmit function provided by parent component
+    onSubmit(console.log(file, file2)); // Custom onSubmit function provided by parent component
     onClose(); // Close the popup after submitting
   };
 
@@ -63,7 +66,7 @@ const UploadContent = ({ onClose, onSubmit }) => {
       </div>
       Upload the images of the model:
       <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
-        <Input name='contentImages' onChange={(e) => { setFile(e.target.files[0]) }} type="file" disableUnderline />
+        <Input name='contentImages' onChange={(e) => { setFile2(e.target.files[0]) }} type="file" disableUnderline />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10}}>
         <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
