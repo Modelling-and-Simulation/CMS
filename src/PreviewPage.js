@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import DisplayPreview from './DisplayPreview';
+import axios from 'axios';
 import Header from './components/Header';
-import firebase from 'firebase/app';  // Import the main firebase module
-import 'firebase/storage';
-
-// const firebaseConfig = {
-//   apiKey: process.env.FIREBASE_API_KEY,
-//   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-//   projectId: process.env.FIREBASE_PROJECT_ID,
-//   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-//   appId: process.env.FIREBASE_APP_ID,
-//   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-// };
-
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 
 const PreviewPage = () => {
   const defaultImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'fit' };
@@ -29,35 +13,34 @@ const PreviewPage = () => {
   const [targetImages, setTargetImages] = useState([]);
 
   useEffect(() => {
-    const fetchImages = async (folderName, setImageState) => {
-      const storageRef = firebase.storage().ref().child(folderName);
-      const images = [];
+    axios.get('http://localhost:8080/api/contents/',  {})
+    .then(res => {
+      setContentImages(res.data);
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 
-      try {
-        const listResult = await storageRef.listAll();
-        await Promise.all(
-          listResult.items.map(async (item) => {
-            const url = await item.getDownloadURL();
-            images.push(url);
-          })
-        );
-        setImageState(images);
-      } catch (error) {
-        console.error('Error fetching images:', error);
-      }
-    };
+    axios.get('http://localhost:8080/api/targets/',  {})
+    .then(res => {
+      setTargetImages(res.data);
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  },[])
 
-    // Replace 'contents' and 'targets' with the actual folder names in your Firebase Storage
-    fetchImages('contents', setContentImages);
-    fetchImages('targets', setTargetImages);
-  }, []); // Run the effect once when the component mounts
+
+  
 
   const handleContentImageClick = (imageSrc) => {
-    setSelectedContentImage(imageSrc);
+    setSelectedContentImage(imageSrc.url);
   };
 
   const handleTargetImageClick = (imageSrc) => {
-    setSelectedTargetImage(imageSrc);
+    setSelectedTargetImage(imageSrc.url);
   };
 
   return (
@@ -98,6 +81,10 @@ const PreviewPage = () => {
         </div>
       </div>
 
+      <div>
+        <button className='link-button' type="submit">Link</button>
+      </div>
+
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div className='select-content'>
           <div style={{ textAlign: 'left', fontWeight: 'bold' }}>Select the Content:</div>
@@ -106,7 +93,7 @@ const PreviewPage = () => {
               <img
                 key={index}
                 className="preview-image"
-                src={imageSrc}
+                src={imageSrc.url}
                 style={{
                   width: '15vw',
                   height: '16vh',
@@ -129,7 +116,7 @@ const PreviewPage = () => {
               <img
                 key={index}
                 className="preview-image"
-                src={imageSrc}
+                src={imageSrc.url}
                 style={{
                   width: '15vw',
                   height: '16vh',
