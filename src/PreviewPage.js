@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import DisplayPreview from './DisplayPreview';
 import Header from './components/Header';
+import firebase from 'firebase/app';  // Import the main firebase module
+import 'firebase/storage';
+
+// const firebaseConfig = {
+//   apiKey: process.env.FIREBASE_API_KEY,
+//   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.FIREBASE_APP_ID,
+//   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+// };
+
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
 
 const PreviewPage = () => {
   const defaultImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'fit' };
@@ -10,6 +25,32 @@ const PreviewPage = () => {
 
   const [selectedContentImage, setSelectedContentImage] = useState("/img/image.png");
   const [selectedTargetImage, setSelectedTargetImage] = useState("/img/image.png");
+  const [contentImages, setContentImages] = useState([]);
+  const [targetImages, setTargetImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async (folderName, setImageState) => {
+      const storageRef = firebase.storage().ref().child(folderName);
+      const images = [];
+
+      try {
+        const listResult = await storageRef.listAll();
+        await Promise.all(
+          listResult.items.map(async (item) => {
+            const url = await item.getDownloadURL();
+            images.push(url);
+          })
+        );
+        setImageState(images);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    // Replace 'contents' and 'targets' with the actual folder names in your Firebase Storage
+    fetchImages('contents', setContentImages);
+    fetchImages('targets', setTargetImages);
+  }, []); // Run the effect once when the component mounts
 
   const handleContentImageClick = (imageSrc) => {
     setSelectedContentImage(imageSrc);
@@ -19,32 +60,9 @@ const PreviewPage = () => {
     setSelectedTargetImage(imageSrc);
   };
 
-  const contentImages = [
-    "/img/cottage.png",
-    "/img/mug.png",
-    "/img/house.jpg",
-    "/img/room.png",
-    "/img/spaceship.png",
-  ];
-
-  const targetImages = [
-    "/img/cottage.png",
-    "/img/mug.png",
-    "/img/house.jpg",
-    "/img/room.png",
-    "/img/spaceship.png",
-  ];
-
-  const glbFileName = 'mercedes.glb'; 
-
   return (
     <Container>
       <div className='top-preview'>
-        {/* <div className='preview-header'>
-          <Typography style={{ backgroundColor: '#9518C0', height: '6vh', fontWeight: 'bold', marginTop: 15 }}>
-            Link Content and the Target
-          </Typography>
-        </div> */}
         <Header title='Link Content and the Target'/>
 
         <div className='preview' style={{ width: '40vw' }}>
@@ -54,6 +72,7 @@ const PreviewPage = () => {
                 <img
                   src={selectedContentImage}
                   style={selectedContentImage === "/img/image.png" ? defaultImageStyle : modelImageStyle}
+                  alt="Content Preview"
                 />
               </div>
             )}
@@ -61,7 +80,7 @@ const PreviewPage = () => {
           </div>
 
           <div style={{ marginTop: 50, marginInline: 20 }}>
-            <img src="/img/link.png" style={{ width: '2vw', height: '4vh', borderRadius: 'inherit', objectFit: 'cover' }} />
+            <img src="/img/link.png" style={{ width: '2vw', height: '4vh', borderRadius: 'inherit', objectFit: 'cover' }} alt="Link"/>
           </div>
 
           <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
@@ -70,6 +89,7 @@ const PreviewPage = () => {
                 <img
                   src={selectedTargetImage}
                   style={selectedTargetImage === "/img/image.png" ? defaultImageStyle : modelImageStyle}
+                  alt="Target Preview"
                 />
               </div>
             )}
@@ -96,9 +116,9 @@ const PreviewPage = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => handleContentImageClick(imageSrc)}
+                alt={`Content ${index + 1}`}
               />
             ))}
-            <DisplayPreview fileName={glbFileName} />
           </div>
         </div>
 
@@ -119,6 +139,7 @@ const PreviewPage = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => handleTargetImageClick(imageSrc)}
+                alt={`Target ${index + 1}`}
               />
             ))}
           </div>
