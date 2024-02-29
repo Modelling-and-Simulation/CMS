@@ -27,12 +27,17 @@ const UploadTarget = ({ onClose, onSubmit }) => {
     const selectedFile = e.target.files[0];
     setIsSuccess(false);
 
-    // const allowedTypes = [".mind"];
-    // if(!allowedTypes.includes(selectedFile?.type)){
-    //   setIsError(true);
-    //   setErrorMsg ("Only .mind format is allowed!");
-    //   return;
-    // }
+    const isValidFileUploaded=(file)=>{
+      const validExtensions = 'mind';
+      const fileExtension = file.name.split('.')[1];
+      return validExtensions.includes(fileExtension)
+    }
+
+    if(!isValidFileUploaded(selectedFile)){
+      setIsError(true);
+      setErrorMsg ("Only mind format is allowed!");
+        return;
+    }
 
     setIsError(false);
     setFile(selectedFile);
@@ -42,11 +47,16 @@ const UploadTarget = ({ onClose, onSubmit }) => {
     const selectedFile2 = e.target.files[0];
     setIsSuccess2(false);
 
-    const allowedTypes =["image/jpg", "image/jpeg", "image/png", "image/webp"];
-    if(!allowedTypes.includes(selectedFile2?.type)){
+    const isValidFileUploaded1=(file)=>{
+      const validExtensions = ['png','jpeg','jpg','webp']
+      const fileExtension = file.type.split('/')[1]
+      return validExtensions.includes(fileExtension)
+    }
+
+    if(!isValidFileUploaded1(selectedFile2)){
       setIsError2(true);
-      setErrorMsg2 ("Only jpg, png, webp, & jpeg formats are allowed!");
-      return;
+        setErrorMsg2 ("Only jpg, png, webp, & jpeg formats are allowed!");
+        return;
     }
 
     setIsError2(false);
@@ -116,7 +126,7 @@ const UploadTarget = ({ onClose, onSubmit }) => {
         fontWeight='bold'
         marginBottom='10px'
         >
-          Upload a Content
+          Upload a Target
         </Typography>
       {/* Select files to upload: */}
       Upload the model file:

@@ -27,15 +27,22 @@ const UploadContent = ({ onClose, onSubmit }) => {
     const selectedFile = e.target.files[0];
     setIsSuccess(false);
 
-    const allowedTypes = [".glb"];
-    if(!allowedTypes.includes(selectedFile?.type)){
-      setIsError(true);
-      setErrorMsg ("Only glb format is allowed!");
-      return;
+    const isValidFileUploaded=(file)=>{
+      const validExtensions = 'glb';
+      const fileExtension = file.name.split('.')[1];
+      return validExtensions.includes(fileExtension)
     }
 
-    setIsError(false);
-    setFile(selectedFile);
+    if(!isValidFileUploaded(selectedFile)){
+      setIsError(true);
+      setErrorMsg ("Only glb format is allowed!");
+        // return;
+    } else{
+      setIsError(false);
+      setFile(selectedFile);
+    }
+
+    
   }
 
   const handleFileChange2 = (e) => {

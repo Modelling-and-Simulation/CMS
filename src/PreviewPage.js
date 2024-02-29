@@ -9,8 +9,20 @@ const PreviewPage = () => {
 
   const [selectedContentImage, setSelectedContentImage] = useState("/img/image.png");
   const [selectedTargetImage, setSelectedTargetImage] = useState("/img/image.png");
+  const [selectedContentID, setSelectedContentID] = useState("");
+  const [selectedTargetID, setSelectedTargetID] = useState("");
+  const [selectedContentDescription, setSelectedContentDescription] = useState("");
+  const [selectedTargetDescription, setSelectedTargetDescription] = useState("");
+  const [isContentHovering, setIsContentHovering] = useState(false);
+  const [isTargetHovering, setIsTargetHovering] = useState(false);
+
   const [contentImages, setContentImages] = useState([]);
   const [targetImages, setTargetImages] = useState([]);
+
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/contents/',  {})
@@ -37,11 +49,56 @@ const PreviewPage = () => {
 
   const handleContentImageClick = (imageSrc) => {
     setSelectedContentImage(imageSrc.url);
+    setSelectedContentID(imageSrc.id);
+    console.log(imageSrc.description);
   };
 
   const handleTargetImageClick = (imageSrc) => {
     setSelectedTargetImage(imageSrc.url);
+    setSelectedTargetID(imageSrc.id);
+    console.log(imageSrc.description);
+
   };
+
+  const showConntentDescription = (imageSrc) => {
+    setIsContentHovering(true);
+    setSelectedContentDescription(imageSrc.description);
+  };
+
+  const hideContentDescription = (imageSrc) => {
+    setIsContentHovering(false);
+  };
+
+  const showTargetDescription = (imageSrc) => {
+    setIsTargetHovering(true);
+    setSelectedTargetDescription(imageSrc.description);
+  };
+
+  const hideTargetDescription = (imageSrc) => {
+    setIsTargetHovering(false);
+  };
+
+  const handleSubmit = () => {
+    axios.post('http://localhost:8080/api/links/',{contentId:selectedContentID, targetId:selectedTargetID})
+    .then(res => {
+      setIsSuccess(true);
+      setSuccessMsg("Content and target have been linked successfully!");
+      setTimeout(() => {
+      setIsSuccess(false);
+        
+      }, 2000);
+      console.log(res.data);
+    })
+    .catch(err => {
+      setIsError(true);
+      setErrorMsg("An error occured!");
+      setTimeout(() => {
+        setIsError(false);
+          
+        }, 2000);
+      console.error(err);
+    });
+  }
 
   return (
     <Container>
@@ -79,10 +136,12 @@ const PreviewPage = () => {
             Target Preview
           </div>
         </div>
+        {isSuccess && <div className='success-text'>{successMsg}</div>}
+        {isError && <div className='error-text'>{errorMsg}</div>}
       </div>
 
       <div>
-        <button className='link-button' type="submit">Link</button>
+        <button className='link-button' type="submit" onClick={handleSubmit}>Link</button>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -103,9 +162,20 @@ const PreviewPage = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => handleContentImageClick(imageSrc)}
+                onMouseEnter={() => {
+                  console.log("check1");
+                  showConntentDescription(imageSrc)}
+                }
+                onMouseLeave={() => hideContentDescription(imageSrc)}
                 alt={`Content ${index + 1}`}
               />
             ))}
+
+            {isContentHovering && (
+              <div>
+                {selectedContentDescription}
+              </div>
+            )}
           </div>
         </div>
 
@@ -126,9 +196,18 @@ const PreviewPage = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => handleTargetImageClick(imageSrc)}
+                onMouseEnter={() => 
+                  showTargetDescription(imageSrc)
+                }
+                onMouseLeave={() => hideTargetDescription(imageSrc)}
                 alt={`Target ${index + 1}`}
               />
             ))}
+            {isTargetHovering && (
+              <div>
+                {selectedTargetDescription}
+              </div>
+            )}
           </div>
         </div>
       </div>

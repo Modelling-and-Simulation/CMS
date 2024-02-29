@@ -116,6 +116,18 @@
   padding: 0.5rem 1rem;
 }
 
+.success-text{
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: green;
+  background-color: greenyellow;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  text-align: center;
+  max-width: 40vw;
+}
+
 .link-button{
   margin-top: 40vh;
   margin-left: 78vw;
