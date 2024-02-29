@@ -24,6 +24,8 @@ const PreviewPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
+  const [linkedUrl, setLinkedUrl] = useState("");
+
   useEffect(() => {
     axios.get('http://localhost:8080/api/contents/',  {})
     .then(res => {
@@ -83,10 +85,12 @@ const PreviewPage = () => {
     .then(res => {
       setIsSuccess(true);
       setSuccessMsg("Content and target have been linked successfully!");
-      setTimeout(() => {
-      setIsSuccess(false);
+      // setTimeout(() => {
+      // setIsSuccess(false);
         
-      }, 2000);
+      // }, 5000);
+      setLinkedUrl(`http://localhost:3000/api/webar/${selectedTargetID}`);
+
       console.log(res.data);
     })
     .catch(err => {
@@ -137,6 +141,12 @@ const PreviewPage = () => {
           </div>
         </div>
         {isSuccess && <div className='success-text'>{successMsg}</div>}
+        {isSuccess && 
+          <div className='share-link'>
+            <button className='share-button'>Share Link</button>
+            <p>Copy Link: <a href={linkedUrl}>{linkedUrl}</a></p>
+          </div>
+        }
         {isError && <div className='error-text'>{errorMsg}</div>}
       </div>
 

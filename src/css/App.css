@@ -147,3 +147,31 @@
 .link-button:hover{
   box-shadow: 2px 2px 2px rgb(44, 23, 56);
 }
+
+.share-link{
+  width: 50vw;
+  padding: 10px;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 3vh;
+  border: 0.5px solid #79109D;
+  max-height: 6vh;
+  background-color: rgb(221, 201, 231);
+}
+
+.share-button{
+  background-color:#79109D ;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  width: 7vw;
+  height: 5vh;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  float: inline-end;
+}
+
+.share-button:hover{
+  box-shadow: 2px 2px 2px rgb(44, 23, 56);
+}
