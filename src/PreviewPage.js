@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import Header from './components/Header';
+import { Link } from 'react-router-dom';
 
 const PreviewPage = () => {
+
   const defaultImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'fit' };
   const modelImageStyle = { width: '15vw', height: '16vh', borderRadius: 'inherit', objectFit: 'cover' };
 
@@ -25,6 +27,9 @@ const PreviewPage = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const [linkedUrl, setLinkedUrl] = useState("");
+  const [linkedUrl2, setLinkedUrl2] = useState("");
+
+  const [urls, setUrls] = useState({});
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/contents/',  {})
@@ -45,6 +50,16 @@ const PreviewPage = () => {
       console.error(err);
     });
   },[])
+
+  // useEffect(() => {
+  //   // Fetch the content and target URLs from the backend
+  //   axios.get('http://localhost:8080/links/1709196908089512')
+  //     .then(response => 
+  //       setUrls(response.data);
+  //       console.log(response.data);
+  //     )
+  //     .catch(error => console.error(error));
+  // }, []);
 
 
   
@@ -89,7 +104,9 @@ const PreviewPage = () => {
       // setIsSuccess(false);
         
       // }, 5000);
-      setLinkedUrl(`http://localhost:3000/api/webar/${selectedTargetID}`);
+      setLinkedUrl(`http://localhost:8080/api/links/${selectedTargetID}`);
+      // setLinkedUrl2(`/mindar-scene/${selectedContentID}/${selectedTargetID}`);
+      console.log(selectedContentID, selectedTargetID);
 
       console.log(res.data);
     })
@@ -102,6 +119,17 @@ const PreviewPage = () => {
         }, 2000);
       console.error(err);
     });
+  }
+
+  const checkScene = () => {
+    console.log('inside scene');
+    axios.get('http://localhost:8080/api/links/1709196908089512')
+      .then(response => {
+        console.log(response.data);
+        setUrls(response.data);
+        
+      })
+      .catch(error => console.error(error));
   }
 
   return (
@@ -145,6 +173,11 @@ const PreviewPage = () => {
           <div className='share-link'>
             <button className='share-button'>Share Link</button>
             <p>Copy Link: <a href={linkedUrl}>{linkedUrl}</a></p>
+            {console.log(urls.contentUrl)}
+            {/* <button onClick={checkScene} src="/mindar-scene?contentUrl=${urls.contentUrl}&targetUrl=${urls.targetUrl}">Go to MindAR Scene</button> */}
+            <Link to={`/mindar-scene?contentUrl=${urls.contentUrl}&targetUrl=${urls.targetUrl}`} onClick={checkScene}>
+              Go to MindAR Scene
+            </Link>
           </div>
         }
         {isError && <div className='error-text'>{errorMsg}</div>}
