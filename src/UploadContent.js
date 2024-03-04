@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 const UploadContent = ({ onClose, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [file2, setFile2] = useState(null);
+  const [text, setText] = useState(null);
 
   const [progress, setProgress] = useState({ started: false, pc: 0 });
   const [msg, setMsg] = useState(null);
@@ -17,9 +18,13 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isError2, setIsError2] = useState(false);
   const [errorMsg2, setErrorMsg2] = useState("");
+  const [isError3, setIsError3] = useState(false);
+  const [errorMsg3, setErrorMsg3] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSuccess2, setIsSuccess2] = useState(false);
+  const [isSuccess3, setIsSuccess3] = useState(false);
+
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -56,32 +61,48 @@ const UploadContent = ({ onClose, onSubmit }) => {
     setFile2(selectedFile2);
   };
 
-  const handleSubmit = () => {
-    if (isError) {
-      return;
+  const handleText = (e) => {
+    const description = e.target.value;
+    setIsSuccess3(false);
+  
+    if (!description.trim()) {
+      setIsError3(true);
+      setErrorMsg3('Description is required!');
+    } else {
+      setIsError3(false);
+      setErrorMsg3('');
+      setText(description);
     }
-    // setErrorMsg("");
-    if (isError2) {
-      return;
-    }
-    // setErrorMsg2("");
+  }
+  
 
-    // console.log(file);
+  const handleSubmit = () => {
+    let error = false;
+
     if (!file) {
-      setIsError(true);
+      error = true
       setErrorMsg("No model file is selected!");
       // return;
     }
 
     if (!file2) {
-      setIsError2(true);
-      setErrorMsg2("No image file is selected!");
-      return;
+      error = true
+      setErrorMsg2('No image file is selected!');
+      // return;
     }
 
+    if(!text){
+      error = true
+      setErrorMsg3('No description is added!');
+    }
+    
+    if(error) return
+
     const fd = new FormData();
-    fd.append("modelFile", file);
-    fd.append("contentImages", file2);
+
+    fd.append('modelFile', file);
+    fd.append('contentImages', file2);
+    fd.append('description', text);
 
     setMsg("Uploading...");
     setProgress((prevState) => {
@@ -123,48 +144,49 @@ const UploadContent = ({ onClose, onSubmit }) => {
         >
           Upload a Content
         </Typography>
-        {/* Select files to upload: */}
-        Upload the model file:
-        <div style={{ marginTop: 10, marginBottom: 5 }}>
-          <Input
-            name="modelFile"
-            onChange={handleFileChange}
-            type="file"
-            disableUnderline
-          />
-          {isError && <div className="error-text">{errorMsg}</div>}
-        </div>
-        Upload the images of the model:
-        <div style={{ marginTop: 5, marginBottom: 5, marginRight: 15 }}>
-          <Input
-            name="contentImages"
-            onChange={handleFileChange2}
-            type="file"
-            disableUnderline
-          />
-          {isError2 && <div className="error-text">{errorMsg2}</div>}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: 10,
-            marginTop: 20,
-          }}
-        >
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            style={{ backgroundColor: "#79109D", color: "white" }}
-          >
-            Submit
-          </Button>
-        </div>
-        {progress.started && (
-          <progress max="100" value={progress.pc}></progress>
-        )}
-        {msg && <span>{msg}</span>}
-      </form>
+
+      {/* Select files to upload: */}
+      Upload the model file:
+      <div style={{marginTop: 10, marginBottom:5}}>
+        <Input 
+          name='modelFile' 
+          onChange={handleFileChange} 
+          type="file" 
+          disableUnderline 
+        />
+        {isError && <div className='error-text'>{errorMsg}</div>}
+      </div>
+      Upload the images of the model:
+      <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
+        <Input 
+          name='contentImages' 
+          onChange={handleFileChange2} 
+          type="file" 
+          disableUnderline 
+        />
+        {isError2 && <div className='error-text'>{errorMsg2}</div>}
+      </div>
+      Give a description for the model:
+      <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
+        <Input 
+          name='description' 
+          onChange={handleText} 
+          type="text" 
+          disableUnderline 
+          style={{border: 'solid', width: '17vw', height: '8vh'}}
+        />
+        {isError3 && <div className='error-text'>{errorMsg3}</div>}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10, marginTop:20}}>
+        <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
+          Submit
+        </Button>
+      </div>
+      {progress.started && <progress max="100" value={progress.pc}></progress>}
+      {msg && <span>{msg}</span>}
+
+    </form>
+
     </>
   );
 };
