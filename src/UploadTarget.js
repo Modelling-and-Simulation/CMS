@@ -82,34 +82,30 @@ const UploadTarget = ({ onClose, onSubmit }) => {
   }
 
   const handleSubmit = () => {
-    if(isError){
-      return;
-    }
-    // setErrorMsg("");
-    if(isError2){
-      return;
-    }
-    // setErrorMsg2("");
+    let error = false;
 
-
-    // console.log(file);
     if(!file){
+      error = true;
       setIsError(true);
       setErrorMsg('No mind file is selected!');
       // return;
     }
 
     if(!file2){
+      error = true;
       setIsError2(true);
       setErrorMsg2('No image file is selected!');
       // return;
     }
 
     if(!text){
+      error = true;
       setIsError3(true);
       setErrorMsg3('No description is added!');
-      return;
+      // return;
     }
+
+    if(error) return
 
     const fd = new FormData();
     fd.append('mindFile', file);
