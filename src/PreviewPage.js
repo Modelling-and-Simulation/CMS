@@ -50,7 +50,6 @@ const PreviewPage = () => {
       .get("http://localhost:8080/api/contents/", {})
       .then((res) => {
         setContentImages(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -60,33 +59,20 @@ const PreviewPage = () => {
       .get("http://localhost:8080/api/targets/", {})
       .then((res) => {
         setTargetImages(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
 
-  // useEffect(() => {
-  //   // Fetch the content and target URLs from the backend
-  //   axios.get('http://localhost:8080/links/1709196908089512')
-  //     .then(response =>
-  //       setUrls(response.data);
-  //       console.log(response.data);
-  //     )
-  //     .catch(error => console.error(error));
-  // }, []);
-
   const handleContentImageClick = (imageSrc) => {
     setSelectedContentImage(BACKEND_URL + imageSrc.image);
     setSelectedContentID(imageSrc.id);
-    console.log(imageSrc.description);
   };
 
   const handleTargetImageClick = (imageSrc) => {
     setSelectedTargetImage(BACKEND_URL + imageSrc.targetImage);
     setSelectedTargetID(imageSrc.id);
-    console.log(imageSrc.description);
   };
 
   const showConntentDescription = (imageSrc) => {
@@ -116,15 +102,7 @@ const PreviewPage = () => {
       .then((res) => {
         setIsSuccess(true);
         setSuccessMsg("Content and target have been linked successfully!");
-        // setTimeout(() => {
-        // setIsSuccess(false);
-
-        // }, 5000);
         setLinkedUrl(`http://localhost:8080/api/links/${selectedTargetID}`);
-        // setLinkedUrl2(`/mindar-scene/${selectedContentID}/${selectedTargetID}`);
-        console.log(selectedContentID, selectedTargetID);
-
-        console.log(res.data);
       })
       .catch((err) => {
         setIsError(true);
@@ -134,17 +112,6 @@ const PreviewPage = () => {
         }, 2000);
         console.error(err);
       });
-  };
-
-  const checkScene = () => {
-    console.log("inside scene");
-    axios
-      .get("http://localhost:8080/api/links/1709196908089512")
-      .then((response) => {
-        console.log(response.data);
-        setUrls(response.data);
-      })
-      .catch((error) => console.error(error));
   };
 
   return (
@@ -221,11 +188,8 @@ const PreviewPage = () => {
             <p>
               Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
             </p>
-            {console.log(urls.contentUrl)}
-            {/* <button onClick={checkScene} src="/mindar-scene?contentUrl=${urls.contentUrl}&targetUrl=${urls.targetUrl}">Go to MindAR Scene</button> */}
             <Link
-              to={`/mindar-scene?contentUrl=${urls.contentUrl}&targetUrl=${urls.targetUrl}`}
-              onClick={checkScene}
+              to={`/mindar-scene/${selectedTargetID}`}
             >
               Go to MindAR Scene
             </Link>
@@ -261,7 +225,6 @@ const PreviewPage = () => {
                 }}
                 onClick={() => handleContentImageClick(imageSrc)}
                 onMouseEnter={() => {
-                  console.log("check1");
                   showConntentDescription(imageSrc);
                 }}
                 onMouseLeave={() => hideContentDescription(imageSrc)}

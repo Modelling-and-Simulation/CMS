@@ -8,8 +8,8 @@
     <!-- Access contentUrl and targetUrl from query parameters -->
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const contentUrl = urlParams.get('contentUrl');
-        const targetUrl = urlParams.get('targetUrl');
+        const contentUrl = "http://localhost:8080/" + urlParams.get('contentUrl');
+        const targetUrl = "http://localhost:8080/" + urlParams.get('targetUrl');
 
         // Use contentUrl and targetUrl in your 3D scene logic
         console.log('Content URL:', contentUrl);
@@ -25,6 +25,8 @@
                     video.components.geometry.isPlaying = false
 
                 });
+                document.querySelector("a-gltf-model").setAttribute("src", contentUrl);
+                document.querySelector("a-scene").setAttribute("mindar-image", `filterMinCF:0.0001; filterBeta: 0.01; imageTargetSrc: ${targetUrl}; maxTrack:2;`);
             },
         });
 
@@ -32,18 +34,13 @@
 </head>
 
 <body>
-    <a-scene
-        mindar-image="filterMinCF:0.0001; filterBeta: 0.01; imageTargetSrc: ./pattern/bmwandspade9.mind; maxTrack:2;"
-        vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" scene-loaded>
-        <a-assets>
-            <a-asset-item id="bmw-model" src="./assets/bmw.glb"></a-asset-item>
-        </a-assets>
+    <a-scene vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" scene-loaded>
         <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
             raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0" id="model0">
-            <a-gltf-model id="model" class="clickable" src="#bmw-model" position="0 0 0" scale="0.3 0.3 0.3"
-                rotation="-90 180 0" click-node="targetNode: SunRoof" />
+            <a-gltf-model id="model" class="clickable" position="0 0 0" scale="0.3 0.3 0.3" rotation="-90 180 0"
+                click-node="targetNode: SunRoof" />
 
             <a-circle id="click-link" class="clickable" color="#f00" radius="0.3" rotation="-90 0 0"
                 position="0 0 -1.5"></a-circle>
