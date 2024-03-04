@@ -1,17 +1,17 @@
 // UploadContent.js
-import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
-import Typography from '@mui/material/Typography';
-import Input from '@mui/material/Input';
-import Button from '@mui/material/Button';
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Input from "@mui/material/Input";
+import Button from "@mui/material/Button";
 
 const UploadContent = ({ onClose, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [file2, setFile2] = useState(null);
   const [text, setText] = useState(null);
 
-  const [progress, setProgress] = useState({started: false, pc: 0});
+  const [progress, setProgress] = useState({ started: false, pc: 0 });
   const [msg, setMsg] = useState(null);
 
   const [isError, setIsError] = useState(false);
@@ -26,44 +26,40 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const [isSuccess3, setIsSuccess3] = useState(false);
 
 
-
-
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setIsSuccess(false);
 
-    const isValidFileUploaded=(file)=>{
-      const validExtensions = 'glb';
-      const fileExtension = file.name.split('.')[1];
-      return validExtensions.includes(fileExtension)
-    }
+    const isValidFileUploaded = (file) => {
+      const validExtensions = "glb";
+      const fileExtension = file.name.split(".")[1];
+      return validExtensions.includes(fileExtension);
+    };
 
-    if(!isValidFileUploaded(selectedFile)){
+    if (!isValidFileUploaded(selectedFile)) {
       setIsError(true);
-      setErrorMsg ("Only glb format is allowed!");
-        // return;
-    } else{
+      setErrorMsg("Only glb format is allowed!");
+      // return;
+    } else {
       setIsError(false);
       setFile(selectedFile);
     }
-
-    
-  }
+  };
 
   const handleFileChange2 = (e) => {
     const selectedFile2 = e.target.files[0];
     setIsSuccess2(false);
 
-    const allowedTypes =["image/jpg", "image/jpeg", "image/png", "image/webp"];
-    if(!allowedTypes.includes(selectedFile2?.type)){
+    const allowedTypes = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(selectedFile2?.type)) {
       setIsError2(true);
-      setErrorMsg2 ("Only jpg, png, webp, & jpeg formats are allowed!");
+      setErrorMsg2("Only jpg, png, webp, & jpeg formats are allowed!");
       return;
     }
 
     setIsError2(false);
     setFile2(selectedFile2);
-  }
+  };
 
   const handleText = (e) => {
     const description = e.target.value;
@@ -81,62 +77,57 @@ const UploadContent = ({ onClose, onSubmit }) => {
   
 
   const handleSubmit = () => {
-    if(isError){
-      return;
-    }
-    // setErrorMsg("");
-    if(isError2){
-      return;
-    }
-    // setErrorMsg2("");
+    let error = false;
 
-
-    // console.log(file);
-    if(!file){
-      setIsError(true);
-      setErrorMsg('No model file is selected!');
+    if (!file) {
+      error = true
+      setErrorMsg("No model file is selected!");
       // return;
     }
 
-    if(!file2){
-      setIsError2(true);
+    if (!file2) {
+      error = true
       setErrorMsg2('No image file is selected!');
       // return;
     }
 
     if(!text){
-      setIsError3(true);
+      error = true
       setErrorMsg3('No description is added!');
-      return;
     }
+    
+    if(error) return
 
     const fd = new FormData();
+
     fd.append('modelFile', file);
     fd.append('contentImages', file2);
     fd.append('description', text);
 
-
     setMsg("Uploading...");
-    setProgress(prevState => {
-      return{...prevState, started:true}
-    })
-
-    axios.post('http://localhost:8080/api/contents/', fd, {
-      onUploadProgress: (ProgressEvent) => {setProgress(prevState => {
-        return {...prevState, pc: ProgressEvent.progress*100}
-      })},
-      headers: {
-        "Custom-Header": "value",
-      }
-    })
-    .then(res => {
-      setMsg("Upload successful!");
-      console.log(res.data);
-    })
-    .catch(err => {
-      setMsg("Upload failed!");
-      console.error(err);
+    setProgress((prevState) => {
+      return { ...prevState, started: true };
     });
+
+    axios
+      .post("http://localhost:8080/api/contents/", fd, {
+        onUploadProgress: (ProgressEvent) => {
+          setProgress((prevState) => {
+            return { ...prevState, pc: ProgressEvent.progress * 100 };
+          });
+        },
+        headers: {
+          "Custom-Header": "value",
+        },
+      })
+      .then((res) => {
+        setMsg("Upload successful!");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setMsg("Upload failed!");
+        console.error(err);
+      });
 
     onSubmit(console.log(file, file2)); // Custom onSubmit function provided by parent component
     onClose(); // Close the popup after submitting
@@ -144,15 +135,16 @@ const UploadContent = ({ onClose, onSubmit }) => {
 
   return (
     <>
-    <form action="" >
-    <Typography 
-        variant="h6" 
-        textAlign='center' 
-        fontWeight='bold'
-        marginBottom='10px'
+      <form action="">
+        <Typography
+          variant="h6"
+          textAlign="center"
+          fontWeight="bold"
+          marginBottom="10px"
         >
           Upload a Content
         </Typography>
+
       {/* Select files to upload: */}
       Upload the model file:
       <div style={{marginTop: 10, marginBottom:5}}>
@@ -194,7 +186,7 @@ const UploadContent = ({ onClose, onSubmit }) => {
       {msg && <span>{msg}</span>}
 
     </form>
-      
+
     </>
   );
 };
