@@ -20,7 +20,7 @@ function App() {
           }
         />
         <Route path="/preview" element={<PreviewPage />} />
-        <Route path="/mindar-scene/:contentId/:targetId" element={<MindARScene />} />
+        <Route path="/mindar-scene/:targetId" element={<MindARScene />} />
         {/* <Route path="/mindar-scene" component={MindARScene} /> */}
       </Routes>
     </Router>
