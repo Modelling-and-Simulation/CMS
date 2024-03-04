@@ -150,7 +150,7 @@ const UploadTarget = ({ onClose, onSubmit }) => {
           Upload a Target
         </Typography>
       {/* Select files to upload: */}
-      Upload the model file:
+      Upload the target file:
       <div style={{marginTop: 10, marginBottom:5}}>
         <Input 
           name='mindFile' 
@@ -160,7 +160,7 @@ const UploadTarget = ({ onClose, onSubmit }) => {
         />
         {isError && <div className='error-text'>{errorMsg}</div>}
       </div>
-      Upload the images of the model:
+      Upload the images of the target:
       <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
         <Input 
           name='targetImage' 
