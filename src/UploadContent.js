@@ -81,18 +81,21 @@ const UploadContent = ({ onClose, onSubmit }) => {
 
     if (!file) {
       error = true
+      setIsError(true);
       setErrorMsg("No model file is selected!");
       // return;
     }
 
     if (!file2) {
       error = true
+      setIsError2(true);
       setErrorMsg2('No image file is selected!');
       // return;
     }
 
     if(!text){
       error = true
+      setIsError3(true);
       setErrorMsg3('No description is added!');
     }
     
