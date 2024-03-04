@@ -2,35 +2,28 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Scene from './scene';
 
 const MindARScene = () => {
   const { targetId } = useParams();
-  const [urls, setUrls] = useState([]);
-  console.log(targetId);
+  const [urls, setUrls] = useState(null); // Initialize with null
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/links/${targetId}`)
       .then((response) => {
-        console.log("get links" + response.data);
+        console.log("get links", response.data);
         setUrls(response.data);
       })
       .catch((error) => console.error(error));
   }, [targetId]);
 
-  // Your existing iframe logic here
-
+  // Render the Scene component only when urls is available
   return (
     <div>
       MindAR Scene
-      {/* Your other React components or content */}
-      <iframe
-        title="MindAR Scene"
-        src={`/3dScene.html?contentUrl=${urls.contentUrl}&targetUrl=${urls.targetUrl}`}
-        width="100%"
-        height="500px"
-        frameBorder="0"
-      ></iframe>
+      {/* {console.log(urls.contentUrl)} */}
+      {urls && <Scene contentUrl={urls.contentUrl} targetUrl={urls.targetUrl} />}
     </div>
   );
 };
