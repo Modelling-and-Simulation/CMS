@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
-import axios from "axios";
 import Header from "./components/Header";
 import { Link } from "react-router-dom";
-import { BACKEND_URL } from "./constants";
+import { BACKEND_URL, FRONTEND_URL } from "./constants";
+import { createLink, getAllContents, getAllTargets } from "./api";
 
 const PreviewPage = () => {
   const defaultImageStyle = {
@@ -46,8 +46,7 @@ const PreviewPage = () => {
   const [urls, setUrls] = useState({});
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/contents/", {})
+    getAllContents()
       .then((res) => {
         setContentImages(res.data);
       })
@@ -55,8 +54,7 @@ const PreviewPage = () => {
         console.error(err);
       });
 
-    axios
-      .get("http://localhost:8080/api/targets/", {})
+    getAllTargets()
       .then((res) => {
         setTargetImages(res.data);
       })
@@ -66,12 +64,12 @@ const PreviewPage = () => {
   }, []);
 
   const handleContentImageClick = (imageSrc) => {
-    setSelectedContentImage(BACKEND_URL + imageSrc.image);
+    setSelectedContentImage(BACKEND_URL + "/" + imageSrc.contentImages);
     setSelectedContentID(imageSrc.id);
   };
 
   const handleTargetImageClick = (imageSrc) => {
-    setSelectedTargetImage(BACKEND_URL + imageSrc.targetImage);
+    setSelectedTargetImage(BACKEND_URL + "/" + imageSrc.targetImage);
     setSelectedTargetID(imageSrc.id);
   };
 
@@ -94,15 +92,14 @@ const PreviewPage = () => {
   };
 
   const handleSubmit = () => {
-    axios
-      .post("http://localhost:8080/api/links/", {
-        contentId: selectedContentID,
-        targetId: selectedTargetID,
-      })
+    createLink({
+      contentId: selectedContentID,
+      targetId: selectedTargetID,
+    })
       .then((res) => {
         setIsSuccess(true);
         setSuccessMsg("Content and target have been linked successfully!");
-        setLinkedUrl(`http://localhost:8080/api/links/${selectedTargetID}`);
+        setLinkedUrl(`${FRONTEND_URL}/mindar-scene/${selectedTargetID}`);
       })
       .catch((err) => {
         setIsError(true);
@@ -188,9 +185,7 @@ const PreviewPage = () => {
             <p>
               Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
             </p>
-            <Link
-              to={`/mindar-scene/${selectedTargetID}`}
-            >
+            <Link to={`/mindar-scene/${selectedTargetID}`}>
               Go to MindAR Scene
             </Link>
           </div>
@@ -214,7 +209,7 @@ const PreviewPage = () => {
               <img
                 key={index}
                 className="preview-image"
-                src={BACKEND_URL + imageSrc.image}
+                src={BACKEND_URL + "/" + imageSrc.contentImages}
                 style={{
                   width: "15vw",
                   height: "16vh",
@@ -245,7 +240,7 @@ const PreviewPage = () => {
               <img
                 key={index}
                 className="preview-image"
-                src={BACKEND_URL + imageSrc.targetImage}
+                src={BACKEND_URL + "/" + imageSrc.targetImage}
                 style={{
                   width: "15vw",
                   height: "16vh",

@@ -1,10 +1,10 @@
 // UploadContent.js
 import React from "react";
 import { useState } from "react";
-import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
+import { createContent } from "./api";
 
 const UploadContent = ({ onClose, onSubmit }) => {
   const [file, setFile] = useState(null);
@@ -24,7 +24,6 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSuccess2, setIsSuccess2] = useState(false);
   const [isSuccess3, setIsSuccess3] = useState(false);
-
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -64,65 +63,58 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const handleText = (e) => {
     const description = e.target.value;
     setIsSuccess3(false);
-  
+
     if (!description.trim()) {
       setIsError3(true);
-      setErrorMsg3('Description is required!');
+      setErrorMsg3("Description is required!");
     } else {
       setIsError3(false);
-      setErrorMsg3('');
+      setErrorMsg3("");
       setText(description);
     }
-  }
-  
+  };
 
   const handleSubmit = () => {
     let error = false;
 
     if (!file) {
-      error = true
+      error = true;
       setIsError(true);
       setErrorMsg("No model file is selected!");
       // return;
     }
 
     if (!file2) {
-      error = true
+      error = true;
       setIsError2(true);
-      setErrorMsg2('No image file is selected!');
+      setErrorMsg2("No image file is selected!");
       // return;
     }
 
-    if(!text){
-      error = true
+    if (!text) {
+      error = true;
       setIsError3(true);
-      setErrorMsg3('No description is added!');
+      setErrorMsg3("No description is added!");
     }
-    
-    if(error) return
+
+    if (error) return;
 
     const fd = new FormData();
 
-    fd.append('modelFile', file);
-    fd.append('contentImages', file2);
-    fd.append('description', text);
+    fd.append("modelFile", file);
+    fd.append("contentImages", file2);
+    fd.append("description", text);
 
     setMsg("Uploading...");
     setProgress((prevState) => {
       return { ...prevState, started: true };
     });
 
-    axios
-      .post("http://localhost:8080/api/contents/", fd, {
-        onUploadProgress: (ProgressEvent) => {
-          setProgress((prevState) => {
-            return { ...prevState, pc: ProgressEvent.progress * 100 };
-          });
-        },
-        headers: {
-          "Custom-Header": "value",
-        },
-      })
+    createContent(fd, (progress) => {
+      setProgress((prevState) => {
+        return { ...prevState, pc: progress };
+      });
+    })
       .then((res) => {
         setMsg("Upload successful!");
         console.log(res.data);
@@ -147,49 +139,59 @@ const UploadContent = ({ onClose, onSubmit }) => {
         >
           Upload a Content
         </Typography>
-
-      {/* Select files to upload: */}
-      Upload the model file:
-      <div style={{marginTop: 10, marginBottom:5}}>
-        <Input 
-          name='modelFile' 
-          onChange={handleFileChange} 
-          type="file" 
-          disableUnderline 
-        />
-        {isError && <div className='error-text'>{errorMsg}</div>}
-      </div>
-      Upload the images of the model:
-      <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
-        <Input 
-          name='contentImages' 
-          onChange={handleFileChange2} 
-          type="file" 
-          disableUnderline 
-        />
-        {isError2 && <div className='error-text'>{errorMsg2}</div>}
-      </div>
-      Give a description for the model:
-      <div style={{marginTop: 5, marginBottom:5, marginRight:15}}>
-        <Input 
-          name='description' 
-          onChange={handleText} 
-          type="text" 
-          disableUnderline 
-          style={{border: 'solid', width: '17vw', height: '8vh'}}
-        />
-        {isError3 && <div className='error-text'>{errorMsg3}</div>}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10, marginTop:20}}>
-        <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#79109D', color: 'white' }}>
-          Submit
-        </Button>
-      </div>
-      {progress.started && <progress max="100" value={progress.pc}></progress>}
-      {msg && <span>{msg}</span>}
-
-    </form>
-
+        {/* Select files to upload: */}
+        Upload the model file:
+        <div style={{ marginTop: 10, marginBottom: 5 }}>
+          <Input
+            name="modelFile"
+            onChange={handleFileChange}
+            type="file"
+            disableUnderline
+          />
+          {isError && <div className="error-text">{errorMsg}</div>}
+        </div>
+        Upload the images of the model:
+        <div style={{ marginTop: 5, marginBottom: 5, marginRight: 15 }}>
+          <Input
+            name="contentImages"
+            onChange={handleFileChange2}
+            type="file"
+            disableUnderline
+          />
+          {isError2 && <div className="error-text">{errorMsg2}</div>}
+        </div>
+        Give a description for the model:
+        <div style={{ marginTop: 5, marginBottom: 5, marginRight: 15 }}>
+          <Input
+            name="description"
+            onChange={handleText}
+            type="text"
+            disableUnderline
+            style={{ border: "solid", width: "17vw", height: "8vh" }}
+          />
+          {isError3 && <div className="error-text">{errorMsg3}</div>}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: 10,
+            marginTop: 20,
+          }}
+        >
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            style={{ backgroundColor: "#79109D", color: "white" }}
+          >
+            Submit
+          </Button>
+        </div>
+        {progress.started && (
+          <progress max="100" value={progress.pc}></progress>
+        )}
+        {msg && <span>{msg}</span>}
+      </form>
     </>
   );
 };
