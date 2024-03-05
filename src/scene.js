@@ -1,10 +1,14 @@
 // Scene.js
 import React, { useEffect, useState } from 'react';
 
-const Scene = ({ contentUrl, targetUrl }) => {
+const Scene = ({ modelFile, mindFile }) => {
+  console.log("Received modelFile:", modelFile);
+  console.log("Received mindFile:", mindFile);
   const [loaded, setLoaded] = useState(false);
+  {console.log(modelFile, mindFile)}
 
   useEffect(() => {
+    console.log("inside use effect");
     const handleSceneLoad = () => {
       console.log('Scene loaded');
       const video = document.getElementById('video-plane');
@@ -12,20 +16,34 @@ const Scene = ({ contentUrl, targetUrl }) => {
       if (video?.components?.geometry.isPlaying !== undefined) {
         video.components.geometry.isPlaying = false;
       }
-      setLoaded(true);
+      // setLoaded(true);
     };
 
-    const sceneElement = document.querySelector('a-scene');
+    const initAFrame = () => {
+      const sceneElement = document.querySelector('a-scene');
 
-    if (sceneElement) {
-      sceneElement.addEventListener('loaded', handleSceneLoad);
-    }
-
-    return () => {
       if (sceneElement) {
-        sceneElement.removeEventListener('loaded', handleSceneLoad);
+        console.log('Inside scene element');
+        sceneElement.addEventListener('loaded', handleSceneLoad);
+        console.log('after scene loaded');
+
+        // Cleanup event listener on component unmount
+        return () => {
+          sceneElement.removeEventListener('loaded', handleSceneLoad);
+        };
       }
     };
+
+     // Set loaded to true immediately
+  setLoaded(true);
+
+    // Wait for the document to be fully loaded before initializing A-Frame
+    if (document.readyState === 'complete') {
+      console.log('inside complete');
+      initAFrame();
+    } else {
+      window.addEventListener('load', initAFrame);
+    }
   }, []); // Empty dependency array to run the effect only once when the component mounts
 
   useEffect(() => {
@@ -35,17 +53,17 @@ const Scene = ({ contentUrl, targetUrl }) => {
       const aScene = document.querySelector('a-scene');
 
       if (gltfModel) {
-        gltfModel.setAttribute('src', contentUrl);
+        gltfModel.setAttribute('src', modelFile);
       }
 
       if (aScene) {
         aScene.setAttribute(
           'mindar-image',
-          `filterMinCF:0.0001; filterBeta: 0.01; imageTargetSrc: ${targetUrl}; maxTrack:2;`
+          `filterMinCF:0.0001; filterBeta: 0.01; imageTargetSrc: ${mindFile}; maxTrack:2;`
         );
       }
     }
-  }, [loaded, contentUrl, targetUrl]);
+  }, [loaded, modelFile, mindFile]);
 
   return (
     <div>

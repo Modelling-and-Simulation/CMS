@@ -23,12 +23,15 @@ const PreviewPage = () => {
     useState("/img/image.png");
   const [selectedTargetImage, setSelectedTargetImage] =
     useState("/img/image.png");
+
   const [selectedContentID, setSelectedContentID] = useState("");
   const [selectedTargetID, setSelectedTargetID] = useState("");
+
   const [selectedContentDescription, setSelectedContentDescription] =
     useState("");
   const [selectedTargetDescription, setSelectedTargetDescription] =
     useState("");
+
   const [isContentHovering, setIsContentHovering] = useState(false);
   const [isTargetHovering, setIsTargetHovering] = useState(false);
 
@@ -37,6 +40,7 @@ const PreviewPage = () => {
 
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
@@ -182,6 +186,7 @@ const PreviewPage = () => {
         {isSuccess && (
           <div className="share-link">
             <button className="share-button">Share Link</button>
+            {console.log(selectedTargetID)}
             <p>
               Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
             </p>

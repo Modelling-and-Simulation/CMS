@@ -20,9 +20,15 @@ const MindARScene = () => {
   return (
     <div>
       MindAR Scene
-      {/* {console.log(urls.contentUrl)} */}
+      {/* {console.log(urls.content)}
+      {console.log(urls.content.modelFile)}
+      {console.log(urls.target.mindFile)} */}
       {urls && (
-        <Scene contentUrl={urls.contentUrl} targetUrl={urls.targetUrl} />
+        // <Scene contentUrl={urls.content.modelFile} targetUrl={urls.target.mindFile} />
+        <Scene
+          modelFile={urls.content.modelFile}
+          mindFile={urls.target.mindFile}
+        />
       )}
     </div>
   );
