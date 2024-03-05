@@ -23,3 +23,6 @@ export const getAllTargets = () => API.get("/targets");
 export const createLink = (data) => API.post("/links", data);
 export const getLinkedTargetAndContent = (targetId) =>
   API.get(`/links/${targetId}`);
+
+//alllinks
+export const getAllLinkedContents = () => API.get("/links");
