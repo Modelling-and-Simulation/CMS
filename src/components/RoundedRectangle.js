@@ -44,6 +44,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
           fontWeight: 'bold',
           cursor: 'pointer',
           transition: 'background-color 0.3s ease-in-out',
+          margin: 2,
           ...props.sx,
         }}
       >
