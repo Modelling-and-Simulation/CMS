@@ -37,12 +37,7 @@ const Content = () => {
             <div>
               <img
                 src="/img/upload.png"
-                style={{
-                  width: "2vw",
-                  height: "3vh",
-                  borderRadius: "inherit",
-                  objectFit: "cover",
-                }}
+                className="upload-img"
               />
             </div>
             Upload a content
@@ -52,12 +47,7 @@ const Content = () => {
             <div>
               <img
                 src="/img/upload.png"
-                style={{
-                  width: "2vw",
-                  height: "3vh",
-                  borderRadius: "inherit",
-                  objectFit: "cover",
-                }}
+                className="upload-img"
               />
             </div>
             Upload a target
@@ -79,13 +69,8 @@ const Content = () => {
             <RoundedRectangle sx={{ textAlign: "center", marginLeft:"0px" }} index={3}>
               <div style={{ marginBottom: 5 }}>
                 <img
+                  className="upload-img"
                   src="/img/upload.png"
-                  style={{
-                    width: "2vw",
-                    height: "3vh",
-                    borderRadius: "inherit",
-                    objectFit: "cover",
-                  }}
                 />
               </div>
               Connect the content and target
@@ -120,7 +105,7 @@ const Content = () => {
                   <div style={{ alignItems: "center" }}>
                     <img
                       src={BACKEND_URL + "/" + link.target.targetImage}
-                      className="target-img"
+                      className="content-img"
                       alt="Target"
                     />
                     <p>Target</p>

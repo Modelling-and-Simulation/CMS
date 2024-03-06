@@ -197,6 +197,13 @@
   margin-top: 1vh;
 }
 
+.upload-img{
+  width: 2vw;
+  height: 3vh;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
 /* home page all links preview */
 
 .all-links {
@@ -358,7 +365,7 @@
 
   .content-img{
     width: 24vw;
-    height: 24vh;
+    height: 20vh;
     border-radius: inherit;
     object-fit: fill;
   }
@@ -389,6 +396,13 @@
     margin-top: 14vh; 
     margin-left: 8vw; 
     margin-bottom: 1vh;
+  }
+
+  .upload-img{
+    width: 5vw;
+    height: 4vh;
+    border-radius: inherit;
+    object-fit: fill;
   }
 
   /* preview page  */
