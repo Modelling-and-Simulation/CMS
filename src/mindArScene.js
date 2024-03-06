@@ -40,7 +40,7 @@ const MindARScene = () => {
       }}
     >
       <a-scene
-        mindar-image={`imageTargetSrc: ${mindFileUrl};`}
+        mindar-image={`imageTargetSrc: ${mindFileUrl}; filterMinCF:0.0001; filterBeta: 0.01; maxTrack:2;`}
         color-space="sRGB"
         embedded
         vr-mode-ui="enabled: false"

@@ -36,13 +36,14 @@ const Content = () => {
       </Typography>
 
       <div
+      className="content-container"
         style={{
           display: "flex",
           justifyContent: "space-around",
           marginTop: "15vh",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className="content-cards">
           <RoundedRectangle sx={{ textAlign: "center" }} index={0}>
             <div>
               <img
