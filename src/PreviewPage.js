@@ -16,7 +16,7 @@ const PreviewPage = () => {
     width: "15vw",
     height: "16vh",
     borderRadius: "inherit",
-    objectFit: "cover",
+    objectFit: "fit",
   };
 
   const [selectedContentImage, setSelectedContentImage] =
@@ -120,7 +120,7 @@ const PreviewPage = () => {
       <div className="top-preview">
         <Header title="Link Content and the Target" />
 
-        <div className="preview" style={{ width: "40vw" }}>
+        <div className="preview">
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
             {selectedContentImage && (
               <div
@@ -133,27 +133,24 @@ const PreviewPage = () => {
               >
                 <img
                   src={selectedContentImage}
-                  style={
-                    selectedContentImage === "/img/image.png"
-                      ? defaultImageStyle
-                      : modelImageStyle
-                  }
+                  className="content-preview-img"
+                  // style={
+                  //   selectedContentImage === "/img/image.png"
+                  //     ? defaultImageStyle
+                  //     : modelImageStyle
+                  // }
                   alt="Content Preview"
                 />
               </div>
             )}
-            Content Preview
+            <p>Content Preview</p>
+            
           </div>
 
           <div style={{ marginTop: 50, marginInline: 20 }}>
             <img
+              className="link-img"
               src="/img/link.png"
-              style={{
-                width: "2vw",
-                height: "4vh",
-                borderRadius: "inherit",
-                objectFit: "cover",
-              }}
               alt="Link"
             />
           </div>
@@ -170,41 +167,51 @@ const PreviewPage = () => {
               >
                 <img
                   src={selectedTargetImage}
-                  style={
-                    selectedTargetImage === "/img/image.png"
-                      ? defaultImageStyle
-                      : modelImageStyle
-                  }
+                  className="content-preview-img"
+                  // style={
+                  //   selectedTargetImage === "/img/image.png"
+                  //     ? defaultImageStyle
+                  //     : modelImageStyle
+                  // }
                   alt="Target Preview"
                 />
               </div>
             )}
-            Target Preview
+            <p>Target Preview</p>
           </div>
         </div>
-        {isSuccess && <div className="success-text">{successMsg}</div>}
-        {isSuccess && (
-          <div className="share-link">
-            <button className="share-button">Share Link</button>
-            {console.log(selectedTargetID)}
-            <p>
-              Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
-            </p>
-            <Link to={`/mindar-scene/${selectedTargetID}`}>
-              Go to MindAR Scene
-            </Link>
-          </div>
-        )}
-        {isError && <div className="error-text">{errorMsg}</div>}
-      </div>
 
-      <div>
+        <div>
         <button className="link-button" type="submit" onClick={handleSubmit}>
           Link
         </button>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {isSuccess && <div className="success-text">{successMsg}</div>}
+        {isSuccess && (
+          <div className="share-link">
+            {console.log(selectedTargetID)}
+            <p>
+              Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
+            </p>
+            <div className="scene-btn-container">
+            <Link to={`/mindar-scene/${selectedTargetID}`} style={{ textDecoration: "none"}}>
+              <button className="scene-btn">
+                Go to MindAR Scene
+              </button>
+            </Link>
+            <button className="share-button">Share Link</button>
+            </div>
+           
+            
+          </div>
+        )}
+        {isError && <div className="error-text">{errorMsg}</div>}
+      </div>
+
+      
+
+      <div className="content-target-container">
         <div className="select-content">
           <div style={{ textAlign: "left", fontWeight: "bold" }}>
             Select the Content:
