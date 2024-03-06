@@ -1,11 +1,10 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import RoundedRectangle from "./components/RoundedRectangle";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getAllLinkedContents } from "./api";
-import { BACKEND_URL } from "./constants";
+import { BACKEND_URL, LINK_IMAGE, UPLOAD_IMAGE } from "./constants";
 
 const Content = () => {
   const [allLinks, setAllLinks] = useState(null); // Initialize with null
@@ -27,28 +26,24 @@ const Content = () => {
   return (
     <Container>
       <div className="heading-content">
-        <p>This is the first website where you can interchange the contents as well
-        as the targets as desired.</p>
+        <p>
+          This is the first website where you can interchange the contents as
+          well as the targets as desired.
+        </p>
       </div>
 
-      <div className="content-container" >
+      <div className="content-container">
         <div className="content-cards">
           <RoundedRectangle sx={{ textAlign: "center" }} index={0}>
             <div>
-              <img
-                src="/img/upload.png"
-                className="upload-img"
-              />
+              <img src={UPLOAD_IMAGE} className="upload-img" />
             </div>
             Upload a content
           </RoundedRectangle>
 
           <RoundedRectangle sx={{ textAlign: "center" }} index={1}>
             <div>
-              <img
-                src="/img/upload.png"
-                className="upload-img"
-              />
+              <img src={UPLOAD_IMAGE} className="upload-img" />
             </div>
             Upload a target
           </RoundedRectangle>
@@ -58,20 +53,20 @@ const Content = () => {
           {/* <RoundedRectangle sx={{ textAlign: 'center' }} index={2}>
             <div style={{marginBottom: 5}}>
               <img 
-                  src="/img/upload.png" 
+                  src={UPLOAD_IMAGE} 
                   style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
               />
             </div>
             Upload linked content and target
           </RoundedRectangle> */}
 
-          <Link to="/preview" style={{ textDecoration: "none"}}>
-            <RoundedRectangle sx={{ textAlign: "center", marginLeft:"0px" }} index={3}>
+          <Link to="/preview" style={{ textDecoration: "none" }}>
+            <RoundedRectangle
+              sx={{ textAlign: "center", marginLeft: "0px" }}
+              index={3}
+            >
               <div style={{ marginBottom: 5 }}>
-                <img
-                  className="upload-img"
-                  src="/img/upload.png"
-                />
+                <img className="upload-img" src={UPLOAD_IMAGE} />
               </div>
               Connect the content and target
             </RoundedRectangle>
@@ -95,11 +90,7 @@ const Content = () => {
                   </div>
 
                   <div style={{ marginTop: 50, marginInline: 10 }}>
-                    <img
-                      src="/img/link.png"
-                      className="link-img"
-                      alt="Link"
-                    />
+                    <img src={LINK_IMAGE} className="link-img" alt="Link" />
                   </div>
 
                   <div style={{ alignItems: "center" }}>

@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Header from "./components/Header";
 import { Link } from "react-router-dom";
-import { BACKEND_URL, FRONTEND_URL } from "./constants";
+import {
+  BACKEND_URL,
+  DEFAULT_IMAGE,
+  FRONTEND_URL,
+  LINK_IMAGE,
+} from "./constants";
 import { createLink, getAllContents, getAllTargets } from "./api";
 
 const PreviewPage = () => {
@@ -20,9 +25,8 @@ const PreviewPage = () => {
   };
 
   const [selectedContentImage, setSelectedContentImage] =
-    useState("/img/image.png");
-  const [selectedTargetImage, setSelectedTargetImage] =
-    useState("/img/image.png");
+    useState(DEFAULT_IMAGE);
+  const [selectedTargetImage, setSelectedTargetImage] = useState(DEFAULT_IMAGE);
 
   const [selectedContentID, setSelectedContentID] = useState("");
   const [selectedTargetID, setSelectedTargetID] = useState("");
@@ -135,7 +139,7 @@ const PreviewPage = () => {
                   src={selectedContentImage}
                   className="content-preview-img"
                   // style={
-                  //   selectedContentImage === "/img/image.png"
+                  //   selectedContentImage === DEFAULT_IMAGE
                   //     ? defaultImageStyle
                   //     : modelImageStyle
                   // }
@@ -144,15 +148,10 @@ const PreviewPage = () => {
               </div>
             )}
             <p>Content Preview</p>
-            
           </div>
 
           <div style={{ marginTop: 50, marginInline: 20 }}>
-            <img
-              className="link-img"
-              src="/img/link.png"
-              alt="Link"
-            />
+            <img className="link-img" src={LINK_IMAGE} alt="Link" />
           </div>
 
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -169,7 +168,7 @@ const PreviewPage = () => {
                   src={selectedTargetImage}
                   className="content-preview-img"
                   // style={
-                  //   selectedTargetImage === "/img/image.png"
+                  //   selectedTargetImage === DEFAULT_IMAGE
                   //     ? defaultImageStyle
                   //     : modelImageStyle
                   // }
@@ -182,10 +181,10 @@ const PreviewPage = () => {
         </div>
 
         <div>
-        <button className="link-button" type="submit" onClick={handleSubmit}>
-          Link
-        </button>
-      </div>
+          <button className="link-button" type="submit" onClick={handleSubmit}>
+            Link
+          </button>
+        </div>
 
         {isSuccess && <div className="success-text">{successMsg}</div>}
         {isSuccess && (
@@ -195,21 +194,18 @@ const PreviewPage = () => {
               Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
             </p>
             <div className="scene-btn-container">
-            <Link to={`/mindar-scene/${selectedTargetID}`} style={{ textDecoration: "none"}}>
-              <button className="scene-btn">
-                Go to MindAR Scene
-              </button>
-            </Link>
-            <button className="share-button">Share Link</button>
+              <Link
+                to={`/mindar-scene/${selectedTargetID}`}
+                style={{ textDecoration: "none" }}
+              >
+                <button className="scene-btn">Go to MindAR Scene</button>
+              </Link>
+              <button className="share-button">Share Link</button>
             </div>
-           
-            
           </div>
         )}
         {isError && <div className="error-text">{errorMsg}</div>}
       </div>
-
-      
 
       <div className="content-target-container">
         <div className="select-content">
