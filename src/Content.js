@@ -26,23 +26,12 @@ const Content = () => {
 
   return (
     <Container>
-      <Typography
-        variant="p"
-        component="div"
-        sx={{ textAlign: "left", marginTop: 4, marginLeft: 1, marginBottom: 5 }}
-      >
-        This is the first website where you can interchange the contents as well
-        as the targets as desired.
-      </Typography>
+      <div className="heading-content">
+        <p>This is the first website where you can interchange the contents as well
+        as the targets as desired.</p>
+      </div>
 
-      <div
-      className="content-container"
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: "15vh",
-        }}
-      >
+      <div className="content-container" >
         <div className="content-cards">
           <RoundedRectangle sx={{ textAlign: "center" }} index={0}>
             <div>
@@ -86,8 +75,8 @@ const Content = () => {
             Upload linked content and target
           </RoundedRectangle> */}
 
-          <Link to="/preview" style={{ textDecoration: "none" }}>
-            <RoundedRectangle sx={{ textAlign: "center" }} index={3}>
+          <Link to="/preview" style={{ textDecoration: "none"}}>
+            <RoundedRectangle sx={{ textAlign: "center", marginLeft:"0px" }} index={3}>
               <div style={{ marginBottom: 5 }}>
                 <img
                   src="/img/upload.png"
@@ -104,15 +93,7 @@ const Content = () => {
           </Link>
         </div>
 
-        <div
-          style={{
-            border: "solid",
-            width: "55vw",
-            height: "58vh",
-            padding: "2vh",
-            alignContent: "center",
-          }}
-        >
+        <div className="links-container">
           <h4>Linked contents for the uploaded targets.</h4>
 
           <div className="all-links">
@@ -122,26 +103,16 @@ const Content = () => {
                   <div>
                     <img
                       src={BACKEND_URL + "/" + link.content.contentImages}
-                      style={{
-                        width: "15vw",
-                        height: "16vh",
-                        borderRadius: "inherit",
-                        objectFit: "cover",
-                      }}
+                      className="content-img"
                       alt="Content"
                     />
                     <p>Content</p>
                   </div>
 
-                  <div style={{ marginTop: 50, marginInline: 20 }}>
+                  <div style={{ marginTop: 50, marginInline: 10 }}>
                     <img
                       src="/img/link.png"
-                      style={{
-                        width: "2vw",
-                        height: "4vh",
-                        borderRadius: "inherit",
-                        objectFit: "cover",
-                      }}
+                      className="link-img"
                       alt="Link"
                     />
                   </div>
@@ -149,12 +120,7 @@ const Content = () => {
                   <div style={{ alignItems: "center" }}>
                     <img
                       src={BACKEND_URL + "/" + link.target.targetImage}
-                      style={{
-                        width: "15vw",
-                        height: "16vh",
-                        borderRadius: "inherit",
-                        objectFit: "cover",
-                      }}
+                      className="target-img"
                       alt="Target"
                     />
                     <p>Target</p>

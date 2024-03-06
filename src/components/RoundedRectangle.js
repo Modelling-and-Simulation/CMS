@@ -26,25 +26,25 @@ const RoundedRectangle = ({ children, index, ...props }) => {
   };
 
   return (
-    <div>
+    <div className='box-container'>
       <Box
         onClick={handleClick}
         onMouseEnter={() => setHoveredBox(true)}
         onMouseLeave={() => setHoveredBox(false)}
         sx={{
-          width: '15vw',
-          height: '16vh',
-          backgroundColor: isHoveredBox ? '#BB4AE2' : '#9518C0',
-          borderRadius: 5,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: '#ffffff',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          transition: 'background-color 0.3s ease-in-out',
-          margin: 2,
+          // width: '15vw',
+          // height: '16vh',
+          // backgroundColor: isHoveredBox ? '#BB4AE2' : '#9518C0',
+          // borderRadius: 5,
+          // display: 'flex',
+          // flexDirection: 'column',
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          // color: '#ffffff',
+          // fontWeight: 'bold',
+          // cursor: 'pointer',
+          // transition: 'background-color 0.3s ease-in-out',
+          // margin: '2%',
           ...props.sx,
         }}
       >
