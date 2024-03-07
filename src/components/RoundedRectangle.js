@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,8 +11,6 @@ import { CLOSE_IMAGE } from "../constants";
 const RoundedRectangle = ({ children, index, ...props }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [isHoveredBox, setHoveredBox] = useState(false);
-  const [isHoveredClose, setHoveredClose] = useState(false);
 
   const handleClick = () => {
     if (index < 3) {
@@ -30,8 +28,6 @@ const RoundedRectangle = ({ children, index, ...props }) => {
     <div className="box-container">
       <Box
         onClick={handleClick}
-        onMouseEnter={() => setHoveredBox(true)}
-        onMouseLeave={() => setHoveredBox(false)}
         sx={{
           // width: '15vw',
           // height: '16vh',
@@ -54,26 +50,23 @@ const RoundedRectangle = ({ children, index, ...props }) => {
 
       {index < 3 && (
         <Dialog open={open} onClose={handleClose}>
-          <DialogContent sx={{margin: 2}}>
-
-            <div className='close-btn-container'>
+          <DialogContent sx={{ margin: 2 }}>
+            <div className="close-btn-container">
               <img
-                src="/img/close.png"
-                className='close-btn'
+                src={CLOSE_IMAGE}
+                alt="Close"
+                className="close-btn"
                 onClick={handleClose}
-                onMouseEnter={() => setHoveredClose(true)}
-                onMouseLeave={() => setHoveredClose(false)}
               />
             </div>
 
             <div>
               {index === 0 && (
-                <UploadContent 
-                  // sx={{margin: 2}} 
-                  onClose={handleClose} 
-                  onSubmit={
-                    () => console.log('Submit 1')
-                  } />
+                <UploadContent
+                  // sx={{margin: 2}}
+                  onClose={handleClose}
+                  onSubmit={() => console.log("Submit 1")}
+                />
               )}
               {index === 1 && (
                 <UploadTarget

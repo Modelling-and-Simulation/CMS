@@ -18,11 +18,6 @@ const Content = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const viewLinkedContent = (targetId) => {
-    // navigate to the view page
-    window.open(`/mindar-scene/${targetId}`, "_blank");
-  };
-
   return (
     <Container>
       <div className="heading-content">
@@ -36,29 +31,17 @@ const Content = () => {
         <div className="content-cards">
           <RoundedRectangle sx={{ textAlign: "center" }} index={0}>
             <div>
-              <img src={UPLOAD_IMAGE} className="upload-img" />
+              <img src={UPLOAD_IMAGE} alt="Upload" className="upload-img" />
             </div>
             Upload a content
           </RoundedRectangle>
 
           <RoundedRectangle sx={{ textAlign: "center" }} index={1}>
             <div>
-              <img src={UPLOAD_IMAGE} className="upload-img" />
+              <img src={UPLOAD_IMAGE} alt="Upload" className="upload-img" />
             </div>
             Upload a target
           </RoundedRectangle>
-          {/* </div> */}
-
-          {/* <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 50, marginTop: 20 }}> */}
-          {/* <RoundedRectangle sx={{ textAlign: 'center' }} index={2}>
-            <div style={{marginBottom: 5}}>
-              <img 
-                  src={UPLOAD_IMAGE} 
-                  style={{ width: '2vw', height: '3vh', borderRadius: 'inherit', objectFit: 'cover' }} 
-              />
-            </div>
-            Upload linked content and target
-          </RoundedRectangle> */}
 
           <Link to="/preview" style={{ textDecoration: "none" }}>
             <RoundedRectangle
@@ -66,7 +49,7 @@ const Content = () => {
               index={3}
             >
               <div style={{ marginBottom: 5 }}>
-                <img className="upload-img" src={UPLOAD_IMAGE} />
+                <img className="upload-img" alt="Upload" src={UPLOAD_IMAGE} />
               </div>
               Connect the content and target
             </RoundedRectangle>
@@ -102,29 +85,11 @@ const Content = () => {
                     <p>Target</p>
                   </div>
 
-                  <button
-                    className="view-button"
-                    onClick={() => viewLinkedContent(link.target.id)}
-                  >
-                    View
-                  </button>
-                  {/* </div> */}
+                  <Link to={`/mindar-scene/${link.target.id}`}>
+                    <button className="view-button">View</button>
+                  </Link>
                 </div>
               ))}
-
-            {/* <LinkedContent contentImages={contentImages} targetImages={targetImages} /> */}
-            {/* <div style={{ marginTop: 50, marginInline: 20 }}>
-            <img
-              src={allLinks[0].target.targetImage}
-              style={{
-                width: "2vw",
-                height: "4vh",
-                borderRadius: "inherit",
-                objectFit: "cover",
-              }}
-              alt="Link"
-            />
-          </div> */}
           </div>
         </div>
       </div>
