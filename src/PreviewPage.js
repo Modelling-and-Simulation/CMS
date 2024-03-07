@@ -6,18 +6,6 @@ import { BACKEND_URL, FRONTEND_URL } from "./constants";
 import { createLink, getAllContents, getAllTargets } from "./api";
 
 const PreviewPage = () => {
-  const defaultImageStyle = {
-    width: "15vw",
-    height: "16vh",
-    borderRadius: "inherit",
-    objectFit: "fit",
-  };
-  const modelImageStyle = {
-    width: "15vw",
-    height: "16vh",
-    borderRadius: "inherit",
-    objectFit: "fit",
-  };
 
   const [selectedContentImage, setSelectedContentImage] =
     useState("/img/image.png");
@@ -35,6 +23,9 @@ const PreviewPage = () => {
   const [isContentHovering, setIsContentHovering] = useState(false);
   const [isTargetHovering, setIsTargetHovering] = useState(false);
 
+  const [hoveredContentIndex, setHoveredContentIndex] = useState(null);
+  const [hoveredTargetIndex, setHoveredTargetIndex] = useState(null);
+
   const [contentImages, setContentImages] = useState([]);
   const [targetImages, setTargetImages] = useState([]);
 
@@ -45,9 +36,6 @@ const PreviewPage = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const [linkedUrl, setLinkedUrl] = useState("");
-  const [linkedUrl2, setLinkedUrl2] = useState("");
-
-  const [urls, setUrls] = useState({});
 
   useEffect(() => {
     getAllContents()
@@ -77,21 +65,25 @@ const PreviewPage = () => {
     setSelectedTargetID(imageSrc.id);
   };
 
-  const showConntentDescription = (imageSrc) => {
+  const showConntentDescription = (imageSrc, index) => {
+    setHoveredContentIndex(index);
     setIsContentHovering(true);
     setSelectedContentDescription(imageSrc.description);
   };
 
-  const hideContentDescription = (imageSrc) => {
+  const hideContentDescription = (imageSrc, index) => {
+    setHoveredContentIndex(null);
     setIsContentHovering(false);
   };
 
-  const showTargetDescription = (imageSrc) => {
+  const showTargetDescription = (imageSrc, index) => {
+    setHoveredTargetIndex(index);
     setIsTargetHovering(true);
     setSelectedTargetDescription(imageSrc.description);
   };
 
-  const hideTargetDescription = (imageSrc) => {
+  const hideTargetDescription = (imageSrc, index) => {
+    setHoveredTargetIndex(null);
     setIsTargetHovering(false);
   };
 
@@ -134,17 +126,12 @@ const PreviewPage = () => {
                 <img
                   src={selectedContentImage}
                   className="content-preview-img"
-                  // style={
-                  //   selectedContentImage === "/img/image.png"
-                  //     ? defaultImageStyle
-                  //     : modelImageStyle
-                  // }
                   alt="Content Preview"
                 />
               </div>
             )}
             <p>Content Preview</p>
-            
+
           </div>
 
           <div style={{ marginTop: 50, marginInline: 20 }}>
@@ -168,11 +155,6 @@ const PreviewPage = () => {
                 <img
                   src={selectedTargetImage}
                   className="content-preview-img"
-                  // style={
-                  //   selectedTargetImage === "/img/image.png"
-                  //     ? defaultImageStyle
-                  //     : modelImageStyle
-                  // }
                   alt="Target Preview"
                 />
               </div>
@@ -182,10 +164,10 @@ const PreviewPage = () => {
         </div>
 
         <div>
-        <button className="link-button" type="submit" onClick={handleSubmit}>
-          Link
-        </button>
-      </div>
+          <button className="link-button" type="submit" onClick={handleSubmit}>
+            Link
+          </button>
+        </div>
 
         {isSuccess && <div className="success-text">{successMsg}</div>}
         {isSuccess && (
@@ -195,21 +177,21 @@ const PreviewPage = () => {
               Copy Link: <a href={linkedUrl}>{linkedUrl}</a>
             </p>
             <div className="scene-btn-container">
-            <Link to={`/mindar-scene/${selectedTargetID}`} style={{ textDecoration: "none"}}>
-              <button className="scene-btn">
-                Go to MindAR Scene
-              </button>
-            </Link>
-            <button className="share-button">Share Link</button>
+              <Link to={`/mindar-scene/${selectedTargetID}`} style={{ textDecoration: "none" }}>
+                <button className="scene-btn">
+                  Go to MindAR Scene
+                </button>
+              </Link>
+              <button className="share-button">Share Link</button>
             </div>
-           
-            
+
+
           </div>
         )}
         {isError && <div className="error-text">{errorMsg}</div>}
       </div>
 
-      
+
 
       <div className="content-target-container">
         <div className="select-content">
@@ -218,30 +200,27 @@ const PreviewPage = () => {
           </div>
           <div className="content-scroll">
             {contentImages.map((imageSrc, index) => (
-              <img
-                key={index}
-                className="preview-image"
-                src={BACKEND_URL + "/" + imageSrc.contentImages}
-                style={{
-                  width: "15vw",
-                  height: "16vh",
-                  borderRadius: "inherit",
-                  objectFit: "cover",
-                  margin: 10,
-                  cursor: "pointer",
-                }}
-                onClick={() => handleContentImageClick(imageSrc)}
-                onMouseEnter={() => {
-                  showConntentDescription(imageSrc);
-                }}
-                onMouseLeave={() => hideContentDescription(imageSrc)}
-                alt={`Content ${index + 1}`}
-              />
-            ))}
+              <div className="image-description" key={index}>
+                <img
+                  className="preview-image"
+                  src={BACKEND_URL + "/" + imageSrc.contentImages}
+                  onClick={() => handleContentImageClick(imageSrc)}
+                  onMouseEnter={() => showConntentDescription(imageSrc, index)}
+                  onMouseLeave={() => hideContentDescription(imageSrc, index)}
+                  alt={`Content ${index + 1}`}
+                />
 
-            {isContentHovering && <div>{selectedContentDescription}</div>}
+                {hoveredContentIndex === index && (
+                  <div className="hover-description">
+                    {selectedContentDescription}
+                  </div>
+                )}
+
+              </div>
+            ))}
           </div>
         </div>
+
 
         <div className="select-target">
           <div style={{ textAlign: "left", fontWeight: "bold" }}>
@@ -249,25 +228,24 @@ const PreviewPage = () => {
           </div>
           <div className="target-scroll">
             {targetImages.map((imageSrc, index) => (
-              <img
-                key={index}
-                className="preview-image"
-                src={BACKEND_URL + "/" + imageSrc.targetImage}
-                style={{
-                  width: "15vw",
-                  height: "16vh",
-                  borderRadius: "inherit",
-                  objectFit: "cover",
-                  margin: 10,
-                  cursor: "pointer",
-                }}
-                onClick={() => handleTargetImageClick(imageSrc)}
-                onMouseEnter={() => showTargetDescription(imageSrc)}
-                onMouseLeave={() => hideTargetDescription(imageSrc)}
-                alt={`Target ${index + 1}`}
-              />
+              <div className="image-description" key={index}>
+                <img
+                  className="preview-image"
+                  src={BACKEND_URL + "/" + imageSrc.targetImage}
+                  onClick={() => handleTargetImageClick(imageSrc)}
+                  onMouseEnter={() => showTargetDescription(imageSrc, index)}
+                  onMouseLeave={() => hideTargetDescription(imageSrc, index)}
+                  alt={`Target ${index + 1}`}
+                />
+                {hoveredTargetIndex === index &&
+                  <div className="hover-description">
+                    {selectedTargetDescription}
+                  </div>
+                }
+
+              </div>
+
             ))}
-            {isTargetHovering && <div>{selectedTargetDescription}</div>}
           </div>
         </div>
       </div>

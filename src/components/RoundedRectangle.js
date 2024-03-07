@@ -55,16 +55,10 @@ const RoundedRectangle = ({ children, index, ...props }) => {
         <Dialog open={open} onClose={handleClose}>
           <DialogContent sx={{margin: 2}}>
 
-            <div style={{ float: 'right', position: 'absolute', padding:15, marginLeft:'19vw' }}>
+            <div className='close-btn-container'>
               <img
                 src="/img/close.png"
-                style={{
-                  width: '1.5vw',
-                  height: '1.5vh',
-                  borderRadius: 'inherit',
-                  objectFit: 'cover',
-                  cursor: 'pointer',
-                }}
+                className='close-btn'
                 onClick={handleClose}
                 onMouseEnter={() => setHoveredClose(true)}
                 onMouseLeave={() => setHoveredClose(false)}
@@ -74,7 +68,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
             <div>
               {index === 0 && (
                 <UploadContent 
-                  sx={{margin: 2}} 
+                  // sx={{margin: 2}} 
                   onClose={handleClose} 
                   onSubmit={
                     () => console.log('Submit 1')

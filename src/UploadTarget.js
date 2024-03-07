@@ -170,9 +170,9 @@ const UploadTarget = ({ onClose, onSubmit }) => {
           <Input
             name="description"
             onChange={handleText}
+            className="description-box"
             type="text"
             disableUnderline
-            style={{ border: "solid", width: "17vw", height: "8vh" }}
           />
           {isError3 && <div className="error-text">{errorMsg3}</div>}
         </div>

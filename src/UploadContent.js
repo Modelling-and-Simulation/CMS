@@ -167,7 +167,7 @@ const UploadContent = ({ onClose, onSubmit }) => {
             onChange={handleText}
             type="text"
             disableUnderline
-            style={{ border: "solid", width: "17vw", height: "8vh" }}
+            className="description-box"
           />
           {isError3 && <div className="error-text">{errorMsg3}</div>}
         </div>
