@@ -21,13 +21,8 @@ const UploadTarget = ({ onClose, onSubmit }) => {
   const [isError3, setIsError3] = useState(false);
   const [errorMsg3, setErrorMsg3] = useState("");
 
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isSuccess2, setIsSuccess2] = useState(false);
-  const [isSuccess3, setIsSuccess3] = useState(false);
-
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setIsSuccess(false);
 
     const isValidFileUploaded = (file) => {
       const validExtensions = "mind";
@@ -47,7 +42,6 @@ const UploadTarget = ({ onClose, onSubmit }) => {
 
   const handleFileChange2 = (e) => {
     const selectedFile2 = e.target.files[0];
-    setIsSuccess2(false);
 
     const isValidFileUploaded1 = (file) => {
       const validExtensions = ["png", "jpeg", "jpg", "webp"];
@@ -67,7 +61,6 @@ const UploadTarget = ({ onClose, onSubmit }) => {
 
   const handleText = (e) => {
     const description = e.target.value;
-    setIsSuccess3(false);
 
     if (!description.trim()) {
       setIsError3(true);

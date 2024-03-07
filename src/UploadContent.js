@@ -21,13 +21,8 @@ const UploadContent = ({ onClose, onSubmit }) => {
   const [isError3, setIsError3] = useState(false);
   const [errorMsg3, setErrorMsg3] = useState("");
 
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isSuccess2, setIsSuccess2] = useState(false);
-  const [isSuccess3, setIsSuccess3] = useState(false);
-
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setIsSuccess(false);
 
     const isValidFileUploaded = (file) => {
       const validExtensions = "glb";
@@ -47,7 +42,6 @@ const UploadContent = ({ onClose, onSubmit }) => {
 
   const handleFileChange2 = (e) => {
     const selectedFile2 = e.target.files[0];
-    setIsSuccess2(false);
 
     const allowedTypes = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(selectedFile2?.type)) {
@@ -62,7 +56,6 @@ const UploadContent = ({ onClose, onSubmit }) => {
 
   const handleText = (e) => {
     const description = e.target.value;
-    setIsSuccess3(false);
 
     if (!description.trim()) {
       setIsError3(true);

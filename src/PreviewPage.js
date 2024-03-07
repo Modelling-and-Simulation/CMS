@@ -24,9 +24,6 @@ const PreviewPage = () => {
   const [selectedTargetDescription, setSelectedTargetDescription] =
     useState("");
 
-  const [isContentHovering, setIsContentHovering] = useState(false);
-  const [isTargetHovering, setIsTargetHovering] = useState(false);
-
   const [hoveredContentIndex, setHoveredContentIndex] = useState(null);
   const [hoveredTargetIndex, setHoveredTargetIndex] = useState(null);
 
@@ -71,24 +68,20 @@ const PreviewPage = () => {
 
   const showConntentDescription = (imageSrc, index) => {
     setHoveredContentIndex(index);
-    setIsContentHovering(true);
     setSelectedContentDescription(imageSrc.description);
   };
 
   const hideContentDescription = (imageSrc, index) => {
     setHoveredContentIndex(null);
-    setIsContentHovering(false);
   };
 
   const showTargetDescription = (imageSrc, index) => {
     setHoveredTargetIndex(index);
-    setIsTargetHovering(true);
     setSelectedTargetDescription(imageSrc.description);
   };
 
   const hideTargetDescription = (imageSrc, index) => {
     setHoveredTargetIndex(null);
-    setIsTargetHovering(false);
   };
 
   const handleSubmit = () => {
