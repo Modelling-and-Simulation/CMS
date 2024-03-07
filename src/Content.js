@@ -89,7 +89,7 @@ const Content = () => {
                     <p>Content</p>
                   </div>
 
-                  <div style={{ marginTop: 50, marginInline: 10 }}>
+                  <div>
                     <img src={LINK_IMAGE} className="link-img" alt="Link" />
                   </div>
 

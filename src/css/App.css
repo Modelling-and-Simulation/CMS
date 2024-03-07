@@ -235,7 +235,7 @@
   border: 1px solid rgb(82, 82, 82);
   margin-bottom: 8px;
   padding: 10px;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .view-button {
@@ -318,6 +318,8 @@
   height: 3vh;
   border-radius: inherit;
   object-fit: cover;
+  margin-top: 50px;
+  margin-inline: 10px;
 }
 
 .heading-content{
@@ -382,8 +384,8 @@
   }
 
   .content-img{
-    width: 24vw;
-    height: 20vh;
+    width: 20vw;
+    height: 8vh;
     border-radius: inherit;
     object-fit: fill;
   }
@@ -396,17 +398,18 @@
   }
 
   .link-img{
-    width: 4vw;
-    height: 5vh;
+    width: 2vw;
+    height: 3vh;
     border-radius: inherit;
     object-fit: fill;
+    margin-top: 3vh;
   }
 
   .view-button {
-    width: 10vw;
+    width: 12vw;
     height: 5vh;
-    margin-left: 2vw;
-    margin-top: 10vh;
+    margin-left: 4vw;
+    /* margin-top: 1vh; */
   }
 
   .heading-content{
@@ -436,8 +439,8 @@
   }
 
   .preview-image {
-    width: 20vw;
-    height: 20vh;
+    width: 18vw;
+    height: 10vh;
     border-radius: inherit;
     object-fit: fill;
     margin: 15px;
@@ -478,7 +481,7 @@
   }
 
   .scene-btn{
-    width: 22vw;
+    width: 25vw;
     height: 5vh;
     font-size: small;
   }
@@ -493,8 +496,8 @@
   }
 
   .content-preview-img{
-    width: 20vw;
-    height: 20vh;
+    width: 15vw;
+    height: 12vh;
     border-radius: inherit;
     object-fit: fill;
   }

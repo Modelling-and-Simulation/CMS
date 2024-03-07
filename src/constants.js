@@ -1,9 +1,9 @@
-// export const BACKEND_URL = 'http://localhost:8080';
+export const BACKEND_URL = 'http://localhost:8080';
 // export const BACKEND_URL = 'http://192.168.137.235:8080';
-export const BACKEND_URL = 'https://linen-sage-hammer.glitch.me';
+// export const BACKEND_URL = 'https://linen-sage-hammer.glitch.me';
 
 
-export const FRONTEND_URL = 'http://localhost:3000';
+export const FRONTEND_URL = 'https://modelling-and-simulation.github.io/CMS';
 
 
 // default images
