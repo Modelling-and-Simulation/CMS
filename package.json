@@ -1,6 +1,7 @@
 {
   "name": "cms",
   "version": "0.1.0",
+  "homepage": "https://modelling-and-simulation.github.io/CMS",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -24,6 +25,7 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "scripts": {
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -46,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import UploadContent from '../UploadContent';
-import LinkedUpload from '../LinkedUpload';
-import UploadTarget from '../UploadTarget';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import UploadContent from "../UploadContent";
+import LinkedUpload from "../LinkedUpload";
+import UploadTarget from "../UploadTarget";
+import { CLOSE_IMAGE } from "../constants";
 
 const RoundedRectangle = ({ children, index, ...props }) => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
     if (index < 3) {
       setOpen(true);
     } else {
-      navigate('/preview'); // Navigate to the Preview page for the last rectangle
+      navigate("/preview"); // Navigate to the Preview page for the last rectangle
     }
   };
 
@@ -26,7 +27,7 @@ const RoundedRectangle = ({ children, index, ...props }) => {
   };
 
   return (
-    <div className='box-container'>
+    <div className="box-container">
       <Box
         onClick={handleClick}
         onMouseEnter={() => setHoveredBox(true)}
@@ -75,22 +76,19 @@ const RoundedRectangle = ({ children, index, ...props }) => {
                   } />
               )}
               {index === 1 && (
-                <UploadTarget 
-                  onClose={handleClose} 
-                  onSubmit={
-                    () => console.log('Submit 2')
-                  } />
+                <UploadTarget
+                  onClose={handleClose}
+                  onSubmit={() => console.log("Submit 2")}
+                />
               )}
               {index === 2 && (
-                <LinkedUpload 
-                  title="Upload linked content and target" 
-                  onClose={handleClose} 
-                  onSubmit={
-                    () => console.log('Submit 3')
-                  } />
+                <LinkedUpload
+                  title="Upload linked content and target"
+                  onClose={handleClose}
+                  onSubmit={() => console.log("Submit 3")}
+                />
               )}
             </div>
-            
           </DialogContent>
         </Dialog>
       )}
