@@ -8,7 +8,7 @@ import LinkedUpload from "../LinkedUpload";
 import UploadTarget from "../UploadTarget";
 import { CLOSE_IMAGE } from "../constants";
 
-const RoundedRectangle = ({ children, index, ...props }) => {
+const RoundedRectangle = ({ children, index, setSuccessMsg, setIsSuccess, setIsUploadError, setUploadErrorMsg, ...props }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -64,6 +64,10 @@ const RoundedRectangle = ({ children, index, ...props }) => {
               {index === 0 && (
                 <UploadContent
                   // sx={{margin: 2}}
+                  setSuccessMsg={setSuccessMsg}
+                  setIsSuccess={setIsSuccess}
+                  setUploadErrorMsg={setUploadErrorMsg}
+                  setIsUploadError={setIsUploadError}
                   onClose={handleClose}
                   onSubmit={() => console.log("Submit 1")}
                 />
@@ -71,6 +75,10 @@ const RoundedRectangle = ({ children, index, ...props }) => {
               {index === 1 && (
                 <UploadTarget
                   onClose={handleClose}
+                  setSuccessMsg={setSuccessMsg}
+                  setIsSuccess={setIsSuccess}
+                  setUploadErrorMsg={setUploadErrorMsg}
+                  setIsUploadError={setIsUploadError}
                   onSubmit={() => console.log("Submit 2")}
                 />
               )}

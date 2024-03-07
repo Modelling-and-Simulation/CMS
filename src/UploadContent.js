@@ -6,7 +6,7 @@ import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import { createContent } from "./api";
 
-const UploadContent = ({ onClose, onSubmit }) => {
+const UploadContent = ({ onClose, onSubmit, setSuccessMsg, setIsSuccess, setIsUploadError, setUploadErrorMsg }) => {
   const [file, setFile] = useState(null);
   const [file2, setFile2] = useState(null);
   const [text, setText] = useState(null);
@@ -109,12 +109,20 @@ const UploadContent = ({ onClose, onSubmit }) => {
       });
     })
       .then((res) => {
-        setMsg("Upload successful!");
+        setSuccessMsg("Upload successful!");
+        setIsSuccess(true);
         console.log(res.data);
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2000);
       })
       .catch((err) => {
-        setMsg("Upload failed!");
+        setUploadErrorMsg("Upload failed!");
+        setIsUploadError(true);
         console.error(err);
+        setTimeout(() => {
+          setIsUploadError(false);
+        }, 2000);
       });
 
     onSubmit(console.log(file, file2)); // Custom onSubmit function provided by parent component

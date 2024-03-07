@@ -9,6 +9,12 @@ import { BACKEND_URL, LINK_IMAGE, UPLOAD_IMAGE } from "./constants";
 const Content = () => {
   const [allLinks, setAllLinks] = useState(null); // Initialize with null
 
+  const [isUploadError, setIsUploadError] = useState(false);
+  const [uploadErrorMsg, setUploadErrorMsg] = useState("");
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+
   useEffect(() => {
     getAllLinkedContents()
       .then((response) => {
@@ -27,16 +33,44 @@ const Content = () => {
         </p>
       </div>
 
+      {isSuccess && 
+        <div className="success-text">
+          {successMsg}
+        </div>
+      }
+
+      {isUploadError && 
+        <div className="error-text">
+          {uploadErrorMsg}
+        </div>
+      }
+
+      
+
       <div className="content-container">
         <div className="content-cards">
-          <RoundedRectangle sx={{ textAlign: "center" }} index={0}>
+          <RoundedRectangle 
+            sx={{ textAlign: "center" }} 
+            index={0} 
+            setSuccessMsg={setSuccessMsg} 
+            setIsSuccess={setIsSuccess} 
+            setUploadErrorMsg={setUploadErrorMsg}
+            setIsUploadError={setIsUploadError}
+            >
             <div>
               <img src={UPLOAD_IMAGE} alt="Upload" className="upload-img" />
             </div>
             Upload a content
           </RoundedRectangle>
 
-          <RoundedRectangle sx={{ textAlign: "center" }} index={1}>
+          <RoundedRectangle 
+            sx={{ textAlign: "center" }} 
+            index={1}
+            setSuccessMsg={setSuccessMsg} 
+            setIsSuccess={setIsSuccess} 
+            setUploadErrorMsg={setUploadErrorMsg}
+            setIsUploadError={setIsUploadError}
+            >
             <div>
               <img src={UPLOAD_IMAGE} alt="Upload" className="upload-img" />
             </div>
