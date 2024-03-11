@@ -112,14 +112,7 @@ const PreviewPage = () => {
         <div className="preview">
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
             {selectedContentImage && (
-              <div
-                style={{
-                  textAlign: "center",
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  marginBottom: 15,
-                }}
-              >
+              <div className="preview-image-box">
                 <img
                   src={selectedContentImage}
                   className="content-preview-img"
@@ -131,20 +124,13 @@ const PreviewPage = () => {
 
           </div>
 
-          <div style={{ marginTop: 50, marginInline: 20 }}>
-            <img className="link-img" src={LINK_IMAGE} alt="Link" />
+          <div className="preview-link-container">
+            <img className="preview-link-img" src={LINK_IMAGE} alt="Link" />
           </div>
 
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
             {selectedTargetImage && (
-              <div
-                style={{
-                  textAlign: "center",
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  marginBottom: 15,
-                }}
-              >
+              <div className="preview-image-box">
                 <img
                   src={selectedTargetImage}
                   className="content-preview-img"

@@ -24,6 +24,13 @@
   display: flex;
 }
 
+.preview-image-box{
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
 
 .preview-image {
   width: 15vw;
@@ -322,6 +329,15 @@
   margin-inline: 10px;
 }
 
+.preview-link-img{
+  width: 2vw;
+  height: 3vh;
+  border-radius: inherit;
+  object-fit: cover;
+  margin-top: 50px;
+  margin-inline: 10px;
+}
+
 .heading-content{
   text-align: left; 
   margin-top: 10vh; 
@@ -384,8 +400,8 @@
   }
 
   .content-img{
-    width: 20vw;
-    height: 8vh;
+    width: 23vw;
+    height: 10vh;
     border-radius: inherit;
     object-fit: fill;
   }
@@ -398,7 +414,7 @@
   }
 
   .link-img{
-    width: 2vw;
+    width: 3vw;
     height: 3vh;
     border-radius: inherit;
     object-fit: fill;
@@ -408,8 +424,8 @@
   .view-button {
     width: 12vw;
     height: 5vh;
-    margin-left: 4vw;
-    /* margin-top: 1vh; */
+    margin-left: 5vw;
+    margin-top: 2vh;
   }
 
   .heading-content{
@@ -430,7 +446,7 @@
 
   .preview {
     border: 1px solid rgb(82, 82, 82);
-    width: 60vw;
+    width: 84vw;
     margin-bottom: 2vh;
     margin-top: 10vh;
     padding: 1%;
@@ -438,12 +454,32 @@
     display: flex;
   }
 
+  .preview-image-box{
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
   .preview-image {
-    width: 18vw;
+    width: 20vw;
     height: 10vh;
     border-radius: inherit;
     object-fit: fill;
     margin: 15px;
+  }
+
+  .preview-link-img{
+    width: 3vw;
+    height: 3vh;
+    border-radius: inherit;
+    object-fit: fill;
+    margin-top: 1vh;
+  }
+
+  .preview-link-container{
+    margin-top: 50px;
+    margin-inline: 10px;
   }
 
   .content-target-container{
@@ -454,9 +490,10 @@
 
   .select-content,
   .select-target {
-    width: 80vw;
+    width: 85vw;
     height: 40vh;
     margin-top: 8vh;
+    justify-content: center;
     padding: 5px;
     border: 0.5px solid black;
   }
@@ -496,7 +533,7 @@
   }
 
   .content-preview-img{
-    width: 15vw;
+    width: 20vw;
     height: 12vh;
     border-radius: inherit;
     object-fit: fill;
